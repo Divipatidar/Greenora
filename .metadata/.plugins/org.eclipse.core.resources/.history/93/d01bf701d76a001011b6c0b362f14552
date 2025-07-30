@@ -1,0 +1,40 @@
+package com.cdac.service;
+
+import java.util.List;
+
+import com.cdac.dto.CouponDto;
+import com.cdac.entities.Coupon;
+
+public class CouponServiceImpl implements CouponService {
+
+	@Override
+	public Coupon addCoupon(CouponDto dto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Coupon updateCoupon(Long id, CouponDto dto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteCoupon(Long id) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Coupon validateAndGet(String code, double orderAmount) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Coupon> getAllActiveCoupons() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

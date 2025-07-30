@@ -1,0 +1,45 @@
+package com.cdac.service;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
+
+import com.cdac.dao.AddressDao;
+import com.cdac.dto.AddressDto;
+import com.cdac.entities.Address;
+
+import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
+
+@Service
+@Transactional
+@AllArgsConstructor
+public class AddressServiceImpl implements AddressService {
+	private final ModelMapper modalmapper;
+	private final AddressDao addressdao;
+	
+
+	@Override
+	public Address getUsersAddress(Long userId) {
+		
+		return null;
+	}
+
+	@Override
+	public Address addAddress(Long userId, AddressDto dto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Address updateAddress(Long addressId, AddressDto dto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteAddress(Long addressId) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

@@ -1,0 +1,37 @@
+package com.cdac.service;
+
+import com.cdac.entities.Cart;
+
+public class CartServiceimpl implements CartService {
+
+	@Override
+	public Cart getCartByUserId(Long userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Cart addToCart(Long userId, Long productId, int quantity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Cart updateCartItem(Long userId, Long productId, int quantity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Cart removeFromCart(Long userId, Long productId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void clearCart(Long userId) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

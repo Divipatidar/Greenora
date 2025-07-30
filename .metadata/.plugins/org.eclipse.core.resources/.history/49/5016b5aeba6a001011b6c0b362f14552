@@ -1,0 +1,67 @@
+package com.cdac.service;
+
+import java.util.List;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
+
+import com.cdac.dao.ProductDao;
+import com.cdac.dto.ProductDto;
+import com.cdac.entities.Product;
+
+import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
+
+
+@Service
+@Transactional
+@AllArgsConstructor
+public class ProductServiceImpl implements ProductService {
+
+	private final ModelMapper modalmapper;
+    private final ProductDao productdao;
+    
+	
+	@Override
+	public Product addProduct(Long categoryID,ProductDto dto) {
+		Product product = modalmapper.map(dto, Product.class);
+		return null;
+	}
+
+	@Override
+	public Product updateProduct(Long id, ProductDto dto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteProduct(Long id) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Product getProductById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Product> getAllProducts() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Product> getProductsByCategoryId(Long categoryId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Product> searchProducts(String keyword) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

@@ -1,0 +1,20 @@
+package com.cdac.dto;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
+public class AddressDto extends BaseDto {
+	private String street;
+	
+	private String city;
+	
+	private String state;
+	
+	private String country;
+	
+	private String pincode;
+}

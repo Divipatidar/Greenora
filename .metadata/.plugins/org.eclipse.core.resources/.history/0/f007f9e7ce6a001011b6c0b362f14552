@@ -1,0 +1,96 @@
+package com.cdac.service;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
+
+import com.cdac.custom_exception.ResourseNotFoundException;
+import com.cdac.dao.CartDao;
+import com.cdac.dao.CartItemDao;
+import com.cdac.dao.ProductDao;
+import com.cdac.dao.UserDao;
+import com.cdac.entities.Cart;
+import com.cdac.entities.CartItem;
+import com.cdac.entities.Product;
+import com.cdac.entities.User;
+
+import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
+
+
+
+@Service
+@Transactional
+@AllArgsConstructor
+public class CartServiceimpl implements CartService {
+	
+	private final ModelMapper modalmapper;
+	private final UserDao userdao;
+	private final CartDao cartdao;
+	private final CartItemDao cartitemdao;
+	private final ProductDao productdao;
+	
+
+	@Override
+	public Cart getCartByUserId(Long userId) {
+		   User user = userdao.findById(userId).orElseThrow(
+				   ()-> new ResourseNotFoundException("invalid user id!!!"));
+		   Cart cart = cartdao.findByUserID(userId).orElseGet(
+				   ()->cartdao.save(new Cart(user)));
+		return cart;
+	}
+
+	@Override
+	public Cart addToCart(Long userId, Long productId, int quantity) {
+		User user = userdao.findById(userId).orElseThrow(
+				   ()-> new ResourseNotFoundException("invalid user id!!!"));
+		Cart cart=getCartByUserId(userId);
+		
+		Product product = productdao.findById(productId).orElseThrow(
+				   ()-> new ResourseNotFoundException("invalid user id!!!"));
+		
+		CartItem cartItem = cartitemdao.findByCartIdAndProductId(cart.getId(), productId).orElseThrow(
+				   ()-> new ResourseNotFoundException("invalid cart and product  id!!!"));
+		
+		
+		if(cartItem!=null) {
+			cartItem.setQuantity(cartItem.getQuantity() +quantity);
+		else {
+			cartItem= new CartItem();
+			cartItem.setCart(cart);
+			cartItem.setProduct(product);
+			cartItem.setQuantity(quantity);
+		}
+		
+		cartitemdao.save(cartItem);
+		return cart;
+	}
+
+	@Override
+	public Cart updateCartItem(Long userId, Long productId, int quantity) {
+		Cart cart=getCartByUserId(userId);
+		CartItem cartItem = cartitemdao.findByCartIdAndProductId(cart.getId(), productId).orElseThrow(
+				   ()-> new ResourseNotFoundException("invalid cart and product  id!!!"));
+		
+         cartItem.setQuantity(quantity);
+         
+ 		cartitemdao.save(cartItem);
+
+		return cart;
+	}
+
+	@Override
+	public Cart removeFromCart(Long userId, Long productId) {
+		Cart cart=getCartByUserId(userId);
+          
+		cartitemdao.deleteByCartIdAndProductId(userId, productId);
+		return cart;
+	}
+
+	@Override
+	public void clearCart(Long userId) {
+		Cart cart=getCartByUserId(userId);
+
+      cartitemdao.deleteByCartId(cart.getId());
+	}
+
+}

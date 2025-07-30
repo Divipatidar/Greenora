@@ -1,0 +1,10 @@
+package com.cdac.service;
+
+import com.cdac.dto.AddressDto;
+import com.cdac.entities.Address;
+
+public interface AddressService {
+    Address addAddress(AddressDto dto);
+    Address updateAddress(Long addressId, AddressDto dto);
+    void deleteAddress(Long addressId);
+}

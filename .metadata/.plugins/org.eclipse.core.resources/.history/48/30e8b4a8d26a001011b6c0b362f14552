@@ -1,0 +1,51 @@
+package com.cdac.service;
+
+import java.util.List;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
+
+import com.cdac.dao.CartDao;
+import com.cdac.dao.CartItemDao;
+import com.cdac.dao.OrderDao;
+import com.cdac.dao.OrderItemDao;
+import com.cdac.dao.ProductDao;
+import com.cdac.dao.UserDao;
+import com.cdac.entities.Order;
+
+import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
+
+
+@Service
+@Transactional
+@AllArgsConstructor
+public class OrderServiceimpl implements OrderService {
+    
+	private final ModelMapper modalmapper;
+	private final OrderDao orderdao;
+	private final OrderItemDao orderItemdao;
+	private final UserDao userdao;
+	private final CartDao cartdao;
+	private final CartItemDao cartitemdao;
+	private final ProductDao productdao;
+	
+	@Override
+	public Order placeOrder(Long userId, Long addressId, Long couponId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Order> getOrdersByUser(Long userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Order getOrderById(Long orderId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

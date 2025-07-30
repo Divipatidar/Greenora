@@ -1,0 +1,25 @@
+package com.cdac.dto;
+
+import com.cdac.entities.UserRole;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
+public class UserDto extends BaseDto {
+	private String name;
+	   
+	
+	private String email;
+	
+	
+	private String password;
+	
+	
+	private String phone;
+	
+	private UserRole role;
+}

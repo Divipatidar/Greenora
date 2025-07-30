@@ -1,0 +1,36 @@
+package com.cdac.dto;
+
+import com.cdac.entities.StockStatus;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
+public class ProductDto {
+private String name;
+	
+    private String description;
+	
+	private int quantity;
+	
+	private double price;
+	
+	private byte[] image;
+	
+	
+	private Long categoryId;
+	
+	
+	private Long vendorId;
+	
+	
+	private int ecoRating;
+	
+	
+	private boolean isActive;
+	
+	private StockStatus stockStatus;
+}

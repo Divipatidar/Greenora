@@ -1,0 +1,55 @@
+package com.cdac.service;
+
+import java.util.List;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
+
+import com.cdac.dao.CouponDao;
+import com.cdac.dto.CouponDto;
+import com.cdac.entities.Coupon;
+
+import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
+
+
+@Service
+@Transactional
+@AllArgsConstructor
+public class CouponServiceImpl implements CouponService {
+
+	
+	
+	private final ModelMapper modalmapper;
+	private final CouponDao coupondao;
+	@Override
+	public Coupon addCoupon(CouponDto dto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Coupon updateCoupon(Long id, CouponDto dto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteCoupon(Long id) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Coupon validateAndGet(String code, double orderAmount) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Coupon> getAllActiveCoupons() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

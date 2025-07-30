@@ -1,0 +1,12 @@
+package com.cdac.dao;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.cdac.entities.Product;
+
+
+public interface ProductDao extends JpaRepository<Product, Long> {
+    boolean existsByCategoryIdAndName(Long categoryId, String name);
+     boolean existsByName(String name);
+     
+}

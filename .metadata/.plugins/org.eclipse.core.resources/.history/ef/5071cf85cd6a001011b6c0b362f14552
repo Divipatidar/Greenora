@@ -1,0 +1,9 @@
+package com.cdac.dao;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.cdac.entities.CartItem;
+
+public interface CartItemDao extends JpaRepository<CartItem, Long> {
+
+}
