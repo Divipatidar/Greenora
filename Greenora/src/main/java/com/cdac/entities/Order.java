@@ -4,11 +4,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -42,11 +45,12 @@ public class Order extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 	
-	@ManyToOne
-	@JoinColumn(nullable = false,name = "coupon_id")
+	@ManyToOne(optional = true)
+	@JoinColumn(nullable = true,name = "coupon_id")
 	private Coupon coupon;
 	
-	@OneToMany(cascade = CascadeType.ALL,mappedBy = "order",orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "order",orphanRemoval = true,fetch = FetchType.EAGER)
+	@JsonManagedReference
 	private List<OrderItem> orderItems=new ArrayList<>();
 
 	public Order(double totalAmt, LocalDate orderDate, DeliveryStatus deliveryStatus, User user) {
@@ -54,6 +58,7 @@ public class Order extends BaseEntity {
 		this.totalAmt = totalAmt;
 		this.orderDate = orderDate;
 		this.deliveryStatus = deliveryStatus;
+		this.deliveryDate=LocalDate.now().plusDays(7);
 		this.user = user;
 	}
 	

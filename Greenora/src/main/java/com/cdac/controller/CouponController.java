@@ -3,6 +3,8 @@ package com.cdac.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,23 +19,27 @@ import com.cdac.dto.CouponDto;
 import com.cdac.entities.Coupon;
 import com.cdac.service.CouponService;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/coupons")
+@Validated
 public class CouponController {
 	private final CouponService couponservice;
 	
 	//create Coupon
 	@PostMapping
-	public ResponseEntity<?> create(@RequestBody CouponDto dto){
+	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<?> create(@RequestBody  @Valid CouponDto dto){
+		System.out.println("in add coupon");
 		return ResponseEntity.ok(couponservice.addCoupon(dto));
 	}
 	
     //update coupon
 	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@PathVariable Long id,@RequestBody CouponDto dto){
+	public ResponseEntity<?> update(@PathVariable Long id,@RequestBody  @Valid CouponDto dto){
 		return ResponseEntity.ok(couponservice.updateCoupon(id, dto));
 	}
 	

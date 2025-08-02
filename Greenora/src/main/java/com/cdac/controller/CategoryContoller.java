@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,17 +18,19 @@ import com.cdac.dto.CategoryDto;
 import com.cdac.entities.Category;
 import com.cdac.service.CategoryService;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/categories")
+@Validated
 public class CategoryContoller {
    private final CategoryService categoryservices;
    
    
    @PostMapping
-   public ResponseEntity<?> addCategory(@RequestBody CategoryDto dto){
+   public ResponseEntity<?> addCategory(@RequestBody  @Valid CategoryDto dto){
 	   Category category = categoryservices.addCategory(dto);
 	   return ResponseEntity.
 			   status(HttpStatus.CREATED).body(category);
@@ -42,7 +45,7 @@ public class CategoryContoller {
    }
    
    @PutMapping("/{categoryId}")
-   public ResponseEntity<?> updateCategory(@PathVariable Long categoryId, @RequestBody CategoryDto dto){
+   public ResponseEntity<?> updateCategory(@PathVariable Long categoryId, @RequestBody   @Valid CategoryDto dto){
 	    Category category = categoryservices.updateCategory(categoryId, dto);
 		   return ResponseEntity.ok(category);
 

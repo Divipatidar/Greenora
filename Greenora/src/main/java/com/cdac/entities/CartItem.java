@@ -1,5 +1,7 @@
 package com.cdac.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -14,6 +16,7 @@ import lombok.Setter;
 public class CartItem extends BaseEntity {
 	 @ManyToOne
 	 @JoinColumn(name = "cart_id")
+	 @JsonBackReference
      private Cart cart;
 	 
 	 @ManyToOne
@@ -22,5 +25,5 @@ public class CartItem extends BaseEntity {
 	 
 	 private int quantity;
 	 
-	 private int price;
+	 private double price;
 }

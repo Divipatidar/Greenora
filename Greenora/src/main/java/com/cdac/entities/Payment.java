@@ -19,7 +19,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Payment extends BaseEntity{
-	@ManyToOne(fetch =FetchType.LAZY)
+	@ManyToOne(fetch =FetchType.EAGER)
 	@JoinColumn(name = "order_id",nullable = false)
    private Order orderId;
 	
@@ -37,6 +37,8 @@ public class Payment extends BaseEntity{
 	
 	private double amount;
 	private LocalDateTime datetime;
+	
+	
 	public Payment(Order orderId, PaymentMethod method, PaymentStatus status, String transactionId, double amount,
 			LocalDateTime datetime) {
 		super();

@@ -1,5 +1,8 @@
 package com.cdac.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -20,13 +23,15 @@ public class OrderItem  extends BaseEntity{
      
      private double price;
      
-     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+     @JsonManagedReference
      @JoinColumn(name = "product_id")
      private Product product;
      
      
      @ManyToOne(fetch =FetchType.LAZY)
       @JoinColumn(name = "order_id")
+     @JsonBackReference
      private Order order;
 
 

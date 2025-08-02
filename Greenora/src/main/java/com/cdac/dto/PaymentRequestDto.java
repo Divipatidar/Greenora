@@ -1,9 +1,8 @@
 package com.cdac.dto;
 
-import java.time.LocalDateTime;
-
-import com.cdac.entities.Order;
-
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -11,18 +10,17 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class PaymentRequestDto extends BaseDto {
+public class PaymentRequestDto {
      
+	 @Positive(message = "Order ID must be a positive number")
 	private int orderId;
-	
-	
+	 
+	 @NotBlank(message = "Payment method is required")
 	private String method;
 	
-	private String  status;
-	
-
+	 @NotBlank(message = "Transaction ID is required")
 	private String transactionId;	
 	
+	 @DecimalMin(value = "0.1", inclusive = true, message = "Amount must be at least 0.1")
 	private double amount;
-	private LocalDateTime datetime;
 }

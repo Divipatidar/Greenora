@@ -1,7 +1,5 @@
 package com.cdac.dto;
 
-import com.cdac.entities.UserRole;
-
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -32,5 +30,5 @@ public class SignUpReqDto {
     private String phone;
 
     @NotNull(message = "Role is required")
-    private UserRole role;
+    private String role;
 }

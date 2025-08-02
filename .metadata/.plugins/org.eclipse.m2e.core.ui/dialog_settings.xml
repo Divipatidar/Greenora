@@ -2,6 +2,7 @@
 <section name="Workbench">
 	<section name="MavenProjectImportWizardPage">
 		<list key="rootDirectory">
+			<item value="/Users/divyapatidar/Desktop/Greeora"/>
 			<item value="/Users/divyapatidar/Desktop/Greeora/spring_boot_backend_template with all dependency"/>
 		</list>
 		<list key="projectNameTemplate">

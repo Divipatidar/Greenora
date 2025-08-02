@@ -9,10 +9,12 @@ import com.cdac.custom_exception.InvalidInputException;
 import com.cdac.custom_exception.ResourseNotFoundException;
 import com.cdac.dao.CategoryDao;
 import com.cdac.dao.ProductDao;
+import com.cdac.dao.UserDao;
 import com.cdac.dto.ApiResponse;
 import com.cdac.dto.ProductDto;
 import com.cdac.entities.Category;
 import com.cdac.entities.Product;
+import com.cdac.entities.User;
 
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -26,6 +28,7 @@ public class ProductServiceImpl implements ProductService {
 	private final ModelMapper modalmapper;
     private final ProductDao productdao;
     private final CategoryDao categorydao;
+    private final UserDao userdao;
     
 	
 	@Override
@@ -37,9 +40,11 @@ public class ProductServiceImpl implements ProductService {
 			throw new InvalidInputException("same category and poroduct name alrdy exist!!");
 		}
 		
-		
-		
+		User user = userdao.findById(dto.getVendorId()).orElseThrow(
+				()-> new ResourseNotFoundException("wrong vendor id!!!"));
+				
 		Product product = modalmapper.map(dto, Product.class);
+		product.setVendor(user);
 		category.addProduct(product);
 		return product;
 	}

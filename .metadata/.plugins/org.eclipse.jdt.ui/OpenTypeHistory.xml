@@ -1,15 +1,2 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<typeInfoHistroy>
-    <typeInfo handle="=spring_boot_backend_template with all dependency/\/Users\/divyapatidar\/.m2\/repository\/org\/springframework\/data\/spring-data-jpa\/3.4.5\/spring-data-jpa-3.4.5.jar=/maven.pomderived=/true=/=/maven.groupId=/org.springframework.data=/=/maven.artifactId=/spring-data-jpa=/=/maven.version=/3.4.5=/=/maven.scope=/compile=/=/maven.pomderived=/true=/&lt;org.springframework.data.jpa.repository(JpaRepository.class[JpaRepository" modifiers="1537" timestamp="1745312199000"/>
-    <typeInfo handle="=spring_boot_backend_template with all dependency/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.cdac.service{UserService.java[UserService" modifiers="513" timestamp="1753600243000"/>
-    <typeInfo handle="=spring_boot_backend_template with all dependency/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.cdac.service{AddressService.java[AddressService" modifiers="513" timestamp="1753599853000"/>
-    <typeInfo handle="=spring_boot_backend_template with all dependency/\/Applications\/SpringToolSuite4.app\/Contents\/Eclipse\/plugins\/org.eclipse.justj.openjdk.hotspot.jre.full.macosx.aarch64_21.0.6.v20250130-0529\/jre\/lib\/jrt-fs.jar`jdk.hotspot.agent=/javadoc_location=/https:\/\/docs.oracle.com\/en\/java\/javase\/21\/docs\/api\/=/=/maven.pomderived=/true=/&lt;sun.jvm.hotspot.types(AddressField.class[AddressField" modifiers="1537" timestamp="1742307757000"/>
-    <typeInfo handle="=spring_boot_backend_template with all dependency/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.cdac.service{ProductService.java[ProductService" modifiers="513" timestamp="1753606162000"/>
-    <typeInfo handle="=spring_boot_backend_template with all dependency/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.cdac.dao{ProductDao.java[ProductDao" modifiers="513" timestamp="1753606257000"/>
-    <typeInfo handle="=spring_boot_backend_template with all dependency/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.cdac.dto{BaseDto.java[BaseDto" modifiers="1" timestamp="1753552515000"/>
-    <typeInfo handle="=spring_boot_backend_template with all dependency/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.cdac.service{CategoryService.java[CategoryService" modifiers="513" timestamp="1753606996000"/>
-    <typeInfo handle="=spring_boot_backend_template with all dependency/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.cdac.service{CartService.java[CartService" modifiers="513" timestamp="1753607255000"/>
-    <typeInfo handle="=spring_boot_backend_template with all dependency/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.cdac.service{OrderService.java[OrderService" modifiers="513" timestamp="1753609845000"/>
-    <typeInfo handle="=spring_boot_backend_template with all dependency/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.cdac.dao{CouponDao.java[CouponDao" modifiers="513" timestamp="1753613666000"/>
-    <typeInfo handle="=spring_boot_backend_template with all dependency/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.cdac.service{CouponService.java[CouponService" modifiers="513" timestamp="1753613071000"/>
-</typeInfoHistroy>
+<typeInfoHistroy/>

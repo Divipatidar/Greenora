@@ -3,8 +3,11 @@ package com.cdac.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -23,7 +26,8 @@ public class Cart extends BaseEntity {
 	@JoinColumn(name = "user_id")
     private User user;
 	
-	@OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "cart", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	@JsonManagedReference 
     private List<CartItem> items = new ArrayList<>();
 
 	public Cart(User user) {

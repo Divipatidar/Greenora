@@ -2,6 +2,7 @@ package com.cdac.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,23 +16,25 @@ import com.cdac.dto.ProductDto;
 import com.cdac.entities.Product;
 import com.cdac.service.ProductService;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/products")
+@Validated
 public class ProductContoller {
 	 final ProductService productservice;
 	 
 	 @PostMapping("/{categoryId}")
-	 public ResponseEntity<?> addProduct(@PathVariable Long categoryId,@RequestBody ProductDto dto){
+	 public ResponseEntity<?> addProduct(@PathVariable Long categoryId,@RequestBody  @Valid ProductDto dto){
 		 Product product = productservice.addProduct(categoryId, dto);
 		 return ResponseEntity.status(HttpStatus.CREATED).body(product);
 	 }
      
 	 
 	 @PutMapping("/{productId}")
-	 public ResponseEntity<?> updateProduct(@PathVariable Long productId,@RequestBody ProductDto dto){
+	 public ResponseEntity<?> updateProduct(@PathVariable Long productId,@RequestBody  @Valid ProductDto dto){
 		 Product product = productservice.updateProduct(productId, dto);
 		 return ResponseEntity.ok(product);
 		 

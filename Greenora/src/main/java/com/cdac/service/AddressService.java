@@ -5,7 +5,7 @@ import com.cdac.dto.ApiResponse;
 import com.cdac.entities.Address;
 
 public interface AddressService {
-    Address addAddress(AddressDto dto);
+    Address addAddress(Long userId,AddressDto dto);
     Address updateAddress(Long addressId, AddressDto dto);
     ApiResponse deleteAddress(Long addressId);
 }

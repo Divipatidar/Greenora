@@ -14,6 +14,7 @@ import com.cdac.dao.OrderDao;
 import com.cdac.dao.OrderItemDao;
 import com.cdac.dao.ProductDao;
 import com.cdac.dao.UserDao;
+import com.cdac.dto.OrderResDto;
 import com.cdac.entities.Cart;
 import com.cdac.entities.CartItem;
 import com.cdac.entities.Coupon;
@@ -51,6 +52,7 @@ public class OrderServiceimpl implements OrderService {
 		   List<CartItem> list = cartitemdao.findByCartId(cart.getId());
 		     if(list.isEmpty()) throw new ResourseNotFoundException("cart is empty");
 		     
+		     System.out.println(list.toString());
 		     
 		     double total = list.stream()
 		                .mapToDouble(item -> item.getQuantity() * item.getPrice())
@@ -81,16 +83,19 @@ public class OrderServiceimpl implements OrderService {
 	}
 
 	@Override
-	public List<Order> getOrdersByUser(Long userId) {
+	public List<OrderResDto> getOrdersByUser(Long userId) {
 		
-		return orderdao.findByUserIdOrderByOrderDateDesc(userId);
+		return orderdao.findByUserIdOrderByOrderDateDesc(userId)
+			  .stream()
+			  .map(o->modalmapper.map(o, OrderResDto.class)).toList();
 	}
 
 	@Override
-	public Order getOrderById(Long orderId) {
-		
-		return orderdao.findById(orderId).orElseThrow(
+	public OrderResDto getOrderById(Long orderId) {
+		 System.out.println("order "+ orderId);
+		Order order = orderdao.findById(orderId).orElseThrow(
 				   ()-> new ResourseNotFoundException("invalid order id!!!"));
+		return modalmapper.map(order, OrderResDto.class);
 	}
 
 }

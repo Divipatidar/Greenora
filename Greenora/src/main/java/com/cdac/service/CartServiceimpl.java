@@ -1,5 +1,7 @@
 package com.cdac.service;
 
+import java.util.Optional;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +11,7 @@ import com.cdac.dao.CartItemDao;
 import com.cdac.dao.ProductDao;
 import com.cdac.dao.UserDao;
 import com.cdac.dto.ApiResponse;
+import com.cdac.dto.CartResDto;
 import com.cdac.entities.Cart;
 import com.cdac.entities.CartItem;
 import com.cdac.entities.Product;
@@ -41,19 +44,19 @@ public class CartServiceimpl implements CartService {
 	}
 
 	@Override
-	public Cart addToCart(Long userId, Long productId, int quantity) {
+	public CartResDto addToCart(Long userId, Long productId, int quantity) {
 		User user = userdao.findById(userId).orElseThrow(
 				   ()-> new ResourseNotFoundException("invalid user id!!!"));
 		Cart cart=getCartByUserId(userId);
 		
 		Product product = productdao.findById(productId).orElseThrow(
-				   ()-> new ResourseNotFoundException("invalid user id!!!"));
+				   ()-> new ResourseNotFoundException("invalid product id!!!"));
+		 CartItem cartItem =null;
+		 Optional<CartItem> optional = cartitemdao.findByCartIdAndProductId(cart.getId(), productId);
 		
-		CartItem cartItem = cartitemdao.findByCartIdAndProductId(cart.getId(), productId).orElseThrow(
-				   ()-> new ResourseNotFoundException("invalid cart and product  id!!!"));
 		
-		
-		if(cartItem!=null) {
+		if(optional.isPresent()) {
+			cartItem=optional.get();
 			cartItem.setQuantity(cartItem.getQuantity() +quantity);
 			}
 		else {
@@ -62,9 +65,14 @@ public class CartServiceimpl implements CartService {
 			cartItem.setProduct(product);
 			cartItem.setQuantity(quantity);
 		}
+		cartItem.setPrice(product.getPrice());
 		
 		cartitemdao.save(cartItem);
-		return cart;
+		CartResDto dto= new CartResDto();
+		dto.setQuantity(quantity);
+		dto.setProductId(productId);
+		dto.setItems(cart.getItems());
+		return dto;
 	}
 
 	@Override
@@ -81,11 +89,18 @@ public class CartServiceimpl implements CartService {
 	}
 
 	@Override
-	public Cart removeFromCart(Long userId, Long productId) {
+	public ApiResponse removeFromCart(Long userId, Long productId) {
+		User user = userdao.findById(userId).orElseThrow(
+				   ()-> new ResourseNotFoundException("invalid user id!!!"));
+		
+		Product product = productdao.findById(productId).orElseThrow(
+				   ()-> new ResourseNotFoundException("invalid product id!!!")); 
+		
 		Cart cart=getCartByUserId(userId);
+		if(cart==null) throw new ResourseNotFoundException("cart not found");
           
-		cartitemdao.deleteByCartIdAndProductId(userId, productId);
-		return cart;
+		cartitemdao.deleteByCartIdAndProductId(cart.getId(), productId);
+		return new ApiResponse("deleted!!");
 	}
 
 	@Override

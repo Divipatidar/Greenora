@@ -9,6 +9,7 @@ import com.cdac.custom_exception.ResourseNotFoundException;
 import com.cdac.dao.OrderDao;
 import com.cdac.dao.PaymentDao;
 import com.cdac.dto.PaymentRequestDto;
+import com.cdac.dto.PaymentResDto;
 import com.cdac.entities.DeliveryStatus;
 import com.cdac.entities.Order;
 import com.cdac.entities.Payment;
@@ -33,7 +34,7 @@ public class PaymentServiceImpl implements PaymentService{
 //	Order orderId, PaymentMethod method, PaymentStatus status, String transactionId, double amount,
 //	LocalDateTime datetime)
 	@Override
-	public Payment processPayment(PaymentRequestDto dto) {
+	public PaymentResDto processPayment(PaymentRequestDto dto) {
 		
 		Order order = orderdao.findById((long) dto.getOrderId()).orElseThrow(
 				()-> new ResourseNotFoundException("invalid orderid id!!!"));
@@ -48,7 +49,8 @@ public class PaymentServiceImpl implements PaymentService{
 		 
 		order.setDeliveryStatus(DeliveryStatus.PROCESSING);
 		orderdao.save(order);
-		return savePayment;
+		return   modalmapper.map(savePayment,PaymentResDto.class);
+		
 	}
 
 	@Override

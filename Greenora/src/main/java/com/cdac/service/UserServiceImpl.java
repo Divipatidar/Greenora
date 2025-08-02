@@ -1,6 +1,7 @@
 package com.cdac.service;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.cdac.custom_exception.InvalidInputException;
@@ -20,14 +21,18 @@ public class UserServiceImpl implements UserService {
 	
 	private final UserDao userdao;
 	private final ModelMapper modalmapper;
-	
+	private final PasswordEncoder encoder;
      
 	@Override
 	public UserDto registerUser(SignUpReqDto dto) {
 		 if(userdao.existsByEmail(dto.getEmail())) {
 			 throw new InvalidInputException("user already exist by email!!!!");
 		 }
+		 dto.setRole(dto.getRole().toUpperCase());
+	     
+		 
 		 User user = modalmapper.map(dto, User.class);
+		 user.setPassword(encoder.encode(user.getPassword()));
 		 User userpersitent = userdao.save(user);
 		return  modalmapper.map(userpersitent, UserDto.class);
 	}

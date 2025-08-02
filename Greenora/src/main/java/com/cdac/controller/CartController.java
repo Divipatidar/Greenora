@@ -1,6 +1,7 @@
 package com.cdac.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,14 +12,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cdac.dto.CartDto;
+import com.cdac.dto.CartResDto;
 import com.cdac.entities.Cart;
 import com.cdac.service.CartService;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/cart")
+@Validated
 public class CartController {
   private final CartService cartservice;
   
@@ -29,13 +33,13 @@ public class CartController {
 	  return ResponseEntity.ok(cart);
   }
   @PostMapping("/{userId}")
-  public ResponseEntity<?> addToCart(@PathVariable Long userId ,@RequestBody CartDto dto){
-	  Cart cart = cartservice.addToCart(userId,dto.getProductId(), dto.getQuantity());
+  public ResponseEntity<?> addToCart(@PathVariable Long userId ,@RequestBody  @Valid CartDto dto){
+	  CartResDto cart = cartservice.addToCart(userId,dto.getProductId(), dto.getQuantity());
 	  return ResponseEntity.ok(cart);
   }
   
   @PutMapping("/{userId}")
-  public ResponseEntity<?> updateCartItem(@PathVariable Long userId ,@RequestBody CartDto dto){
+  public ResponseEntity<?> updateCartItem(@PathVariable Long userId ,@RequestBody  @Valid CartDto dto){
      Cart cart = cartservice.updateCartItem(userId,dto.getProductId(), dto.getQuantity());
 	  return ResponseEntity.ok(cart);
 
@@ -43,8 +47,8 @@ public class CartController {
   
   @DeleteMapping("/{userId}/product/{productId}")
   public ResponseEntity<?> removeFromCart(@PathVariable Long userId ,@PathVariable Long productId){
-      Cart cart = cartservice.removeFromCart(userId, productId);
-	  return ResponseEntity.ok(cart);
+      
+	  return ResponseEntity.ok(cartservice.removeFromCart(userId, productId));
 
   }
   

@@ -5,9 +5,11 @@ import org.springframework.stereotype.Service;
 
 import com.cdac.custom_exception.ResourseNotFoundException;
 import com.cdac.dao.AddressDao;
+import com.cdac.dao.UserDao;
 import com.cdac.dto.AddressDto;
 import com.cdac.dto.ApiResponse;
 import com.cdac.entities.Address;
+import com.cdac.entities.User;
 
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -18,13 +20,17 @@ import lombok.AllArgsConstructor;
 public class AddressServiceImpl implements AddressService {
 	private final ModelMapper modalmapper;
 	private final AddressDao addressdao;
-	
+	private final UserDao userdao;
 
 	
 
 	@Override
-	public Address addAddress(AddressDto dto) {
+	public Address addAddress(Long userId,AddressDto dto) {
+		User user = userdao.findById(userId).orElseThrow(()
+				->  new ResourseNotFoundException("user id not found!!!"));
 		Address address = modalmapper.map(dto, Address.class);
+		
+		  user.setMyAddress(address);
 		return addressdao.save(address);
 		
 	}
