@@ -12,8 +12,13 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import lombok.AllArgsConstructor;
+
+import java.util.Arrays;
 
 @Configuration // to declare config class - to declare spring beans - @Bean)
 @EnableWebSecurity // to customize spring security
@@ -25,6 +30,34 @@ public class SecurityConfiguration {
 	private final PasswordEncoder encoder;
 	private final CustomJwtFilter customJwtFilter;
 	private final  JwtAuthEntryPoint jwtAuthEntryPoint;
+
+	// CORS Configuration Bean
+	@Bean
+	public CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+		
+		// Allow your React frontend origin
+		configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173", "http://localhost:3000"));
+		
+		// Allow all HTTP methods
+		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "PATCH"));
+		
+		// Allow all headers
+		configuration.setAllowedHeaders(Arrays.asList("*"));
+		
+		// Allow credentials (important for JWT tokens)
+		configuration.setAllowCredentials(true);
+		
+		// Expose Authorization header to frontend
+		configuration.setExposedHeaders(Arrays.asList("Authorization"));
+		
+		// Apply CORS configuration to all paths
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		
+		return source;
+	}
+
 /* configure spring bean to customize spring security filter chain
  * disable CSRF protection
  - session creation policy - stateless
@@ -35,9 +68,13 @@ public class SecurityConfiguration {
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
 		//1. Disable CSRF protection
 		http.csrf(csrf -> csrf.disable());
-		//2. Authenticate any request 
+		
+		//2. Enable CORS with the configuration source
+		http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
+		
+		//3. Authenticate any request 
 		http.authorizeHttpRequests(request -> 
-		//5.permit all - swagger , view all restaurants , user signin , sign up....
+		//5.permit all - swagger ,  user signin , sign up....
 		request.requestMatchers("/swagger-ui/**","/v**/api-docs/**",
 				"/users/login","/users/signup").permitAll()
 		// User endpoints

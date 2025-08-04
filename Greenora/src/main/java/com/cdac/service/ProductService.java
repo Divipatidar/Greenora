@@ -1,14 +1,17 @@
 package com.cdac.service;
 
+import java.io.IOException;
 import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cdac.dto.ApiResponse;
 import com.cdac.dto.ProductDto;
 import com.cdac.entities.Product;
 
 public interface ProductService {
-	Product addProduct(Long categoryID,ProductDto dto);
-    Product updateProduct(Long id, ProductDto dto);
+	Product addProduct(Long categoryID,ProductDto dto,MultipartFile image) throws IOException;
+    Product updateProduct(Long id, ProductDto dto,MultipartFile image) throws IOException;
      ApiResponse deleteProduct(Long id);
     Product getProductById(Long id);
     List<Product> getAllProducts();

@@ -6,6 +6,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +30,8 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @RequestMapping("/users")
 @Validated
+@CrossOrigin("http://localhost:5173")
+
 public class UserContoller {
    private final UserService userservice;
    private final AuthenticationManager manager;
@@ -56,7 +59,7 @@ public class UserContoller {
 	   Authentication validauth=manager.authenticate(authtoken); 
 	   
 	   //success
-	   System.out.println("after "+authtoken.isAuthenticated());//true;
+	   System.out.println("after "+validauth .isAuthenticated());//true;
 
 	   System.out.println(validauth);
 

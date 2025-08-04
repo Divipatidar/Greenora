@@ -42,7 +42,7 @@ public class User extends BaseEntity implements UserDetails {
 
 	@Enumerated(EnumType.STRING)
 	@Column(length = 100)
-	private UserRole role;
+	private UserRole role;	
 	
 	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	@JoinColumn(name="address_id")

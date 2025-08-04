@@ -1,9 +1,11 @@
 package com.cdac.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cdac.custom_exception.InvalidInputException;
 import com.cdac.custom_exception.ResourseNotFoundException;
@@ -32,7 +34,7 @@ public class ProductServiceImpl implements ProductService {
     
 	
 	@Override
-	public Product addProduct(Long categoryID,ProductDto dto) {
+	public Product addProduct(Long categoryID,ProductDto dto,MultipartFile image) throws IOException {
 		Category category = categorydao.findById(categoryID).orElseThrow(()->
 	     new ResourseNotFoundException("invalid category!!!") );
 		
@@ -44,13 +46,16 @@ public class ProductServiceImpl implements ProductService {
 				()-> new ResourseNotFoundException("wrong vendor id!!!"));
 				
 		Product product = modalmapper.map(dto, Product.class);
+		
+		product.setImage(image.getBytes());
+		
 		product.setVendor(user);
 		category.addProduct(product);
 		return product;
 	}
 
 	@Override
-	public Product updateProduct(Long id, ProductDto dto) {
+	public Product updateProduct(Long id, ProductDto dto,MultipartFile image) throws IOException {
 		if(productdao.existsByName(dto.getName())) {
 			throw new InvalidInputException("duplicate product name!!");
 		}
@@ -58,6 +63,7 @@ public class ProductServiceImpl implements ProductService {
 				ResourseNotFoundException("invalid product id!!!"));
 		
 		 modalmapper.map(dto,product);
+		 product.setImage(image.getBytes());
 		return product;
 	}
 
