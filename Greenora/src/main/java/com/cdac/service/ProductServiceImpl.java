@@ -34,7 +34,7 @@ public class ProductServiceImpl implements ProductService {
     
 	
 	@Override
-	public Product addProduct(Long categoryID,ProductDto dto,MultipartFile image) throws IOException {
+	public Product addProduct(Long categoryID,ProductDto dto)  {
 		Category category = categorydao.findById(categoryID).orElseThrow(()->
 	     new ResourseNotFoundException("invalid category!!!") );
 		
@@ -47,7 +47,6 @@ public class ProductServiceImpl implements ProductService {
 				
 		Product product = modalmapper.map(dto, Product.class);
 		
-		product.setImage(image.getBytes());
 		
 		product.setVendor(user);
 		category.addProduct(product);
@@ -55,7 +54,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Product updateProduct(Long id, ProductDto dto,MultipartFile image) throws IOException {
+	public Product updateProduct(Long id, ProductDto dto)  {
 		if(productdao.existsByName(dto.getName())) {
 			throw new InvalidInputException("duplicate product name!!");
 		}
@@ -63,7 +62,6 @@ public class ProductServiceImpl implements ProductService {
 				ResourseNotFoundException("invalid product id!!!"));
 		
 		 modalmapper.map(dto,product);
-		 product.setImage(image.getBytes());
 		return product;
 	}
 

@@ -25,9 +25,9 @@ public class UserDto {
 	private String email;
 	
 	
-	 @NotBlank(message = "Password is required")
-	    @Size(min = 6, max = 50, message = "Password must be between 6 and 50 characters")
-	private String password;
+//	 @NotBlank(message = "Password is required")
+//	    @Size(min = 6, max = 50, message = "Password must be between 6 and 50 characters")
+//	private String password;
 	
 	 @NotBlank(message = "Phone number is required")
 	  @Pattern(regexp = "^[0-9]{10}$", message = "Phone number must be 10 digits")

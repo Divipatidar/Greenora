@@ -1,20 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="com.cdac.dto.SignUpReqDto"/>
-    <fullyQualifiedTypeName name="com.cdac.dto.SignInDto"/>
-    <fullyQualifiedTypeName name="com.cdac.dto.UserDto"/>
-    <fullyQualifiedTypeName name="com.cdac.service.AddressService"/>
-    <fullyQualifiedTypeName name="com.cdac.dto.AddressDto"/>
-    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.ResponseBody"/>
-    <fullyQualifiedTypeName name="java.lang.String"/>
-    <fullyQualifiedTypeName name="java.time.LocalDateTime"/>
-    <fullyQualifiedTypeName name="com.cdac.service.CategoryService"/>
-    <fullyQualifiedTypeName name="com.cdac.dto.CategoryDto"/>
-    <fullyQualifiedTypeName name="com.cdac.service.ProductService"/>
     <fullyQualifiedTypeName name="com.cdac.dto.ProductDto"/>
     <fullyQualifiedTypeName name="com.cdac.entities.Category"/>
     <fullyQualifiedTypeName name="com.cdac.service.CartService"/>
-    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestBody"/>
     <fullyQualifiedTypeName name="com.cdac.dto.CartDto"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PutMapping"/>
     <fullyQualifiedTypeName name="com.cdac.dto.ApiResponse"/>
@@ -60,4 +48,16 @@
     <fullyQualifiedTypeName name="org.springframework.security.crypto.password.PasswordEncoder"/>
     <fullyQualifiedTypeName name="org.springframework.security.access.prepost.PreAuthorize"/>
     <fullyQualifiedTypeName name="com.cdac.entities.UserRole"/>
+    <fullyQualifiedTypeName name="java.awt.PageAttributes.MediaType"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestPart"/>
+    <fullyQualifiedTypeName name="org.springframework.web.multipart.MultipartFile"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestBody"/>
+    <fullyQualifiedTypeName name="org.springframework.http.MediaType"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.ModelAttribute"/>
+    <fullyQualifiedTypeName name="com.cdac.entities.PaymentMethod"/>
+    <fullyQualifiedTypeName name="com.cdac.entities.PaymentStatus"/>
+    <fullyQualifiedTypeName name="com.cdac.dao.PaymentDao"/>
+    <fullyQualifiedTypeName name="lombok.RequiredArgsConstructor"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.CrossOrigin"/>
+    <fullyQualifiedTypeName name="com.cdac.dto.UserDto"/>
 </qualifiedTypeNameHistroy>

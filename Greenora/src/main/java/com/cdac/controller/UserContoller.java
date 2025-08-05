@@ -60,6 +60,7 @@ public class UserContoller {
 	   
 	   //success
 	   System.out.println("after "+validauth .isAuthenticated());//true;
+	   UserDto user = userservice.login(dto.getEmail(),dto.getPassword());
 
 	   System.out.println(validauth);
 
@@ -69,7 +70,7 @@ public class UserContoller {
 //	    System.out.println("in login "+dto);
 //		   return ResponseEntity.ok(user);
 	   return ResponseEntity.status(HttpStatus.CREATED).body(new AuthResponse("successful login!!",
-			   utils.generateJwtToken(validauth)));
+			   utils.generateJwtToken(validauth),user));
    }
    
    

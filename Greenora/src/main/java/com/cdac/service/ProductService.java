@@ -10,8 +10,8 @@ import com.cdac.dto.ProductDto;
 import com.cdac.entities.Product;
 
 public interface ProductService {
-	Product addProduct(Long categoryID,ProductDto dto,MultipartFile image) throws IOException;
-    Product updateProduct(Long id, ProductDto dto,MultipartFile image) throws IOException;
+	Product addProduct(Long categoryID,ProductDto dto) ;
+    Product updateProduct(Long id, ProductDto dto) ;
      ApiResponse deleteProduct(Long id);
     Product getProductById(Long id);
     List<Product> getAllProducts();

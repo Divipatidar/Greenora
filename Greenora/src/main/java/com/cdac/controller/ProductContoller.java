@@ -1,9 +1,6 @@
 package com.cdac.controller;
 
-import java.io.IOException;
-
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,9 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.cdac.dto.ProductDto;
 import com.cdac.entities.Product;
@@ -33,16 +28,16 @@ import lombok.AllArgsConstructor;
 public class ProductContoller {
 	 final ProductService productservice;
 	 
-	 @PostMapping(value = "/{categoryId}",consumes =MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	 public ResponseEntity<?> addProduct(@PathVariable Long categoryId,@RequestPart("dto")  @Valid ProductDto dto,@RequestPart("image") MultipartFile image) throws IOException{
-		 Product product = productservice.addProduct(categoryId, dto,image);
+	    @PostMapping("/{categoryId}")
+	 public ResponseEntity<?> addProduct(@PathVariable Long categoryId,@RequestBody @Valid ProductDto dto){
+		 Product product = productservice.addProduct(categoryId, dto);
 		 return ResponseEntity.status(HttpStatus.CREATED).body(product);
 	 }
      
 	 
 	 @PutMapping(value="/{productId}" )
-	 public ResponseEntity<?> updateProduct(@PathVariable Long productId,@RequestBody  @Valid ProductDto dto,@RequestPart MultipartFile image) throws IOException{
-		 Product product = productservice.updateProduct(productId, dto,image);
+	 public ResponseEntity<?> updateProduct(@PathVariable Long productId,@RequestBody  @Valid ProductDto dto) {
+		 Product product = productservice.updateProduct(productId, dto);
 		 return ResponseEntity.ok(product);
 		 
 	 }

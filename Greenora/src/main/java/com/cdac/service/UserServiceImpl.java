@@ -38,14 +38,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User login(String email, String password) {
+	public UserDto login(String email, String password) {
 		User user = userdao.findByEmail(email).orElseThrow(()-> 
 		new ResourseNotFoundException("emaill not found!!!"));
-		
-		if(!(user.getPassword().equals(password))) {
-			throw new ResourseNotFoundException("password  not match!!!");
-		}
-		return user;
+		return modalmapper.map(user,UserDto.class);
 	}
 
 	@Override

@@ -30,7 +30,7 @@ public class ProductDto {
 	private double price;
 	
 	
-	
+	private String image ;
     @NotNull(message = "Category ID is required")
 
 	private Long categoryId;

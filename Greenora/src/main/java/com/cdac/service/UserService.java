@@ -6,7 +6,7 @@ import com.cdac.entities.User;
 
 public interface UserService {
 	UserDto registerUser(SignUpReqDto dto);
-    User login(String email, String password); 
+    UserDto login(String email, String password); 
    User updateProfile(Long userId, UserDto dto);
  User getUserById(Long userId);
   

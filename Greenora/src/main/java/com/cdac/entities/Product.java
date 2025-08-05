@@ -29,14 +29,14 @@ public class Product extends BaseEntity {
 	
 	private double price;
 	
-	@Lob
-	private byte[] image;
+	
+	private String  image;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name ="category_id")
 	private Category category;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name ="vendor_id")
 	private User vendor;
 	

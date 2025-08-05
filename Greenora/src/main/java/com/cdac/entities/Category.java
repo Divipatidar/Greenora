@@ -19,10 +19,10 @@ import lombok.Setter;
 @Setter
 public class Category extends BaseEntity {
      
-	@Column(length = 20)
+	@Column(length = 100)
 	private String name;
 	
-	@Column(length = 50)
+	@Column(length = 150)
 	private String description;
 	
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "category",orphanRemoval = true)
