@@ -52,7 +52,7 @@ public class CategoryContoller {
    }
    
    @DeleteMapping("/{categoryId}")
-   public ResponseEntity<?>  deleteAddress(@PathVariable Long categoryId){
+   public ResponseEntity<?>  deleteCategory(@PathVariable Long categoryId){
 	   return ResponseEntity.ok(categoryservices.deleteCategory(categoryId));
    }
 		  

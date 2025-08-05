@@ -31,7 +31,6 @@ public class CouponController {
 	
 	//create Coupon
 	@PostMapping
-	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> create(@RequestBody  @Valid CouponDto dto){
 		System.out.println("in add coupon");
 		return ResponseEntity.ok(couponservice.addCoupon(dto));
