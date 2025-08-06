@@ -1,0 +1,68 @@
+package com.cdac.controller;
+
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.cdac.dto.CouponDto;
+import com.cdac.entities.Coupon;
+import com.cdac.service.CouponService;
+
+import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
+
+@RestController
+@AllArgsConstructor
+@RequestMapping("/coupons")
+@Validated
+@CrossOrigin(" http://localhost:5173")
+
+public class CouponController {
+	private final CouponService couponservice;
+	
+	//create Coupon
+	@PostMapping
+	public ResponseEntity<?> create(@RequestBody  @Valid CouponDto dto){
+		System.out.println("in add coupon");
+		return ResponseEntity.ok(couponservice.addCoupon(dto));
+	}
+	
+    //update coupon
+	@PutMapping("/{id}")
+	public ResponseEntity<?> update(@PathVariable Long id,@RequestBody  @Valid CouponDto dto){
+		return ResponseEntity.ok(couponservice.updateCoupon(id, dto));
+	}
+	
+	//delete coupon
+	@DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        couponservice.deleteCoupon(id);
+        return ResponseEntity.ok("Coupon deleted");
+    }
+    
+	//coupon valid or not
+	@GetMapping("/validate")
+    public ResponseEntity<?> validate(@RequestParam String code,
+                                           @RequestParam double orderAmount) {
+        return ResponseEntity.ok(couponservice.validateAndGet(code, orderAmount));
+    }
+	
+	//checking active coupons
+	@GetMapping("/active")
+	public List<Coupon> getActive(){
+		return couponservice.getAllActiveCoupons();
+	}
+	
+}
