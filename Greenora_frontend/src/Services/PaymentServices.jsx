@@ -23,6 +23,16 @@ export const makePayment = async (paymentData) => {
   }
 };
 
+export const getAllPayments = async () => {
+  try {
+    const response = await axios.get(`${API_URL}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error in get all payments:', error);
+    throw error;
+  }
+}
+
 
 
 export const getOrder = async (orderId) => {
@@ -39,7 +49,7 @@ export const getOrder = async (orderId) => {
 const paymentServices = {
   getOrder,
   makePayment,
-  
+  getAllPayments
 };
 
 export default paymentServices;

@@ -28,7 +28,7 @@ public class CouponServiceImpl implements CouponService {
 	@Override
 	public Coupon addCoupon(CouponDto dto) {
 	     Coupon coupon = modalmapper.map(dto, Coupon.class);
-	     
+	      coupon.setActive(true);
 		return coupondao.save(coupon);
 	}
 

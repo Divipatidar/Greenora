@@ -1,5 +1,7 @@
 package com.cdac.controller;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,6 +25,8 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/payment")
 @CrossOrigin(" http://localhost:5173")
 
+
+
 @Validated
 public class Paymentcontroller {
 	private final PaymentService paymentservice;
@@ -37,5 +41,10 @@ public class Paymentcontroller {
 	public ResponseEntity<Payment> getByOrder(@PathVariable Long orderId) {
 		return ResponseEntity.ok(paymentservice.getPaymentByOrderId(orderId));
 
+	}
+	@GetMapping
+	public ResponseEntity<?> getAll(){
+		List<Payment> list = paymentservice.getAll();
+		return ResponseEntity.ok(list);
 	}
 }

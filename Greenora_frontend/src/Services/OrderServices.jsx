@@ -52,13 +52,36 @@ export const getOrder = async (orderId) => {
     throw error;
   }
 };
+export const getallOrders = async () => {
+  try {
+    const response = await axios.get(`${API_URL}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error in get all orders:', error);
+    throw error;
+  }
+};
+export const updateOrderStatus = async (orderId, status) => {
+  try {
+    const response = await axios.put(`${API_URL}/${orderId}`,null, {
+       params:
+       {
+        status:status
 
-
+       } });
+    return response.data;
+  } catch (error) {
+    console.error('Error updating order status:', error);
+    throw error;
+  }
+}
 
 const OrderServices = {
   getOrder,
   placeOrder,
   getOrderByUser,
+  getallOrders,
+  updateOrderStatus
 };
 
 export default OrderServices;

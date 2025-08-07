@@ -18,6 +18,7 @@ import com.cdac.dao.OrderItemDao;
 import com.cdac.dao.PaymentDao;
 import com.cdac.dao.ProductDao;
 import com.cdac.dao.UserDao;
+import com.cdac.dto.ApiResponse;
 import com.cdac.dto.OrderResDto;
 import com.cdac.dto.OrderSummaryDto;
 import com.cdac.dto.PaymentResDto;
@@ -145,5 +146,22 @@ public class OrderServiceimpl implements OrderService {
 				   ()-> new ResourseNotFoundException("invalid order id!!!"));
 		return modalmapper.map(order, OrderSummaryDto.class);
 	}
+      
+	@Override
+	public List<Order> getAlllOrders() {
+		
+		return orderdao.findAll();
+	}
+
+	@Override
+	public ApiResponse orderUpdate(Long Id, String deliverStatus) {
+		Order order = orderdao.findById(Id).orElseThrow(
+				   ()-> new ResourseNotFoundException("invalid order id!!!"));
+		order.setDeliveryStatus(DeliveryStatus.valueOf(deliverStatus));
+		return new ApiResponse("status updated!!!");
+		
+	}
+
+	
 
 }

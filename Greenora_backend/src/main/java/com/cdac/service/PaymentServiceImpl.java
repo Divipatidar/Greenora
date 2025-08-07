@@ -1,6 +1,7 @@
 package com.cdac.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -59,6 +60,12 @@ public class PaymentServiceImpl implements PaymentService{
 				()-> new ResourseNotFoundException("invalid orderid id!!!"));
 		return paymentdao.findByOrderId(order).orElseThrow(
 				()-> new ResourseNotFoundException("invalid orderid id!!!"));
+	}
+
+	@Override
+	public List<Payment> getAll() {
+		
+		return paymentdao.findAll();
 	}
 
 }

@@ -76,6 +76,22 @@ export const forgotPassword = async (email,password) => {
     throw error;
   }
 }
+
+export const getuserByRole = async (role) => {
+  try {
+    const response = await axios.get(`${API_URL}/role`,{params:{
+      role: role
+    },
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+    });
+    return response.data; 
+  } catch (error) {
+    console.error('Error fetching users by role:', error);
+    throw error;
+  }
+}
 const authenticationServices = {
   signup,
   login,
@@ -83,7 +99,8 @@ const authenticationServices = {
   updateUser,
   getuserbyid,
   addVendor,
-  forgotPassword
+  forgotPassword,
+  getuserByRole
 };
 
 export default authenticationServices;

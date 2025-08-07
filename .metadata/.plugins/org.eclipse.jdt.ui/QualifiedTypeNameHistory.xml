@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="com.cdac.dto.OrderResDto"/>
-    <fullyQualifiedTypeName name="com.cdac.dao.UserDao"/>
-    <fullyQualifiedTypeName name="com.cdac.dto.BaseDto"/>
-    <fullyQualifiedTypeName name="sun.awt.ModalityListener"/>
-    <fullyQualifiedTypeName name="jakarta.persistence.FetchType"/>
-    <fullyQualifiedTypeName name="jakarta.validation.Valid"/>
     <fullyQualifiedTypeName name="org.springframework.validation.annotation.Validated"/>
     <fullyQualifiedTypeName name="org.springframework.security.core.userdetails.UserDetails"/>
-    <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="org.springframework.security.core.authority.SimpleGrantedAuthority"/>
     <fullyQualifiedTypeName name="com.cdac.entities.User"/>
     <fullyQualifiedTypeName name="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
@@ -32,18 +25,15 @@
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.ModelAttribute"/>
     <fullyQualifiedTypeName name="com.cdac.dto.UserUpdateDto"/>
     <fullyQualifiedTypeName name="com.cdac.dto.AddressDto"/>
-    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PathVariable"/>
     <fullyQualifiedTypeName name="com.cdac.dto.PaymentResDto"/>
     <fullyQualifiedTypeName name="com.cdac.dto.OrderSummaryDto"/>
     <fullyQualifiedTypeName name="jakarta.transaction.Transactional"/>
     <fullyQualifiedTypeName name="com.cdac.entities.StockStatus"/>
     <fullyQualifiedTypeName name="com.cdac.dto.SignUpReqDto"/>
-    <fullyQualifiedTypeName name="com.cdac.entities.UserRole"/>
     <fullyQualifiedTypeName name="com.cdac.dto.VendorDto"/>
     <fullyQualifiedTypeName name="org.springframework.http.HttpStatusCode"/>
     <fullyQualifiedTypeName name="org.springframework.boot.context.config.ConfigDataResourceNotFoundException"/>
     <fullyQualifiedTypeName name="com.cdac.custom_exception.ResourseNotFoundException"/>
-    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.GetMapping"/>
     <fullyQualifiedTypeName name="org.springframework.context.annotation.Bean"/>
     <fullyQualifiedTypeName name="org.springframework.mail.javamail.JavaMailSender"/>
     <fullyQualifiedTypeName name="org.springframework.mail.javamail.JavaMailSenderImpl"/>
@@ -51,13 +41,23 @@
     <fullyQualifiedTypeName name="lombok.RequiredArgsConstructor"/>
     <fullyQualifiedTypeName name="lombok.AllArgsConstructor"/>
     <fullyQualifiedTypeName name="com.cdac.service.EmailService"/>
-    <fullyQualifiedTypeName name="lombok.Setter"/>
-    <fullyQualifiedTypeName name="lombok.Getter"/>
-    <fullyQualifiedTypeName name="lombok.NoArgsConstructor"/>
     <fullyQualifiedTypeName name="com.cdac.dto.EmailRedDto"/>
-    <fullyQualifiedTypeName name="com.cdac.dto.ApiResponse"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PostMapping"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestBody"/>
     <fullyQualifiedTypeName name="com.cdac.dto.SignInDto"/>
+    <fullyQualifiedTypeName name="lombok.Setter"/>
+    <fullyQualifiedTypeName name="lombok.Getter"/>
+    <fullyQualifiedTypeName name="lombok.NoArgsConstructor"/>
+    <fullyQualifiedTypeName name="com.cdac.entities.UserRole"/>
+    <fullyQualifiedTypeName name="com.cdac.service.UserRoleDto"/>
+    <fullyQualifiedTypeName name="com.cdac.entities.Order"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="com.cdac.entities.Payment"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.GetMapping"/>
+    <fullyQualifiedTypeName name="com.cdac.entities.DeliveryStatus"/>
+    <fullyQualifiedTypeName name="com.cdac.dto.ApiResponse"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PutMapping"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PathVariable"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestParam"/>
     <fullyQualifiedTypeName name="org.springframework.http.ResponseEntity"/>
 </qualifiedTypeNameHistroy>

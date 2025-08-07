@@ -1,5 +1,7 @@
 package com.cdac.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cdac.dto.AuthResponse;
@@ -24,6 +27,7 @@ import com.cdac.dto.UserUpdateDto;
 import com.cdac.dto.VendorDto;
 import com.cdac.entities.User;
 import com.cdac.security.JwtUtils;
+import com.cdac.service.UserRoleDto;
 import com.cdac.service.UserService;
 
 import jakarta.validation.Valid;
@@ -103,4 +107,11 @@ public class UserContoller {
    public ResponseEntity<?>  forgetPassword(@RequestBody SignInDto dto){
 	   return ResponseEntity.ok(userservice.forgetPass(dto));
    }
+   
+   @GetMapping("/role")
+   public ResponseEntity<?>  getBYRole(@RequestParam String role){
+	   List<UserRoleDto> list = userservice.getUserByRole(role);
+	   return ResponseEntity.ok(list);
+   }
+   
 }

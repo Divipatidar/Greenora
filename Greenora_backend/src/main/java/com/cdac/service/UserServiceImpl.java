@@ -1,5 +1,7 @@
 package com.cdac.service;
 
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -91,6 +93,14 @@ public class UserServiceImpl implements UserService {
 	   user.setPassword(encoder.encode(dto.getPassword()));
 	   return new ApiResponse("password changed!!!");
 
+	}
+
+	@Override
+	public List<UserRoleDto> getUserByRole(String role) {
+		    List<UserRoleDto> list = userdao.findByRole(UserRole.valueOf(role)).stream()
+		    .map(m->modalmapper.map(m,UserRoleDto.class)).toList();
+		     
+		return list;
 	}
 	
 	

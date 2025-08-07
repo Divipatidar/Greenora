@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cdac.dto.OrderResDto;
 import com.cdac.dto.OrderSummaryDto;
 import com.cdac.dto.PaymentResDto;
+import com.cdac.entities.Order;
 import com.cdac.service.OrderService;
 
 import lombok.AllArgsConstructor;
@@ -48,5 +50,14 @@ public class OrderController {
 	  OrderSummaryDto order = orderservice.getOrderById(orderId);
 	  return ResponseEntity.ok(order);
 
+  }
+  @GetMapping
+  public ResponseEntity<?>  getAll(){
+	  List<Order> list = orderservice.getAlllOrders();
+	  return ResponseEntity.ok(list);
+  }
+  @PutMapping("/{id}")
+  public ResponseEntity<?> updateStatus(@PathVariable Long id,@RequestParam String status){
+	   return ResponseEntity.ok(orderservice.orderUpdate(id, status));
   }
 }

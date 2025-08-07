@@ -1,5 +1,7 @@
 package com.cdac.service;
 
+import java.util.List;
+
 import com.cdac.dto.ApiResponse;
 import com.cdac.dto.SignInDto;
 import com.cdac.dto.SignUpReqDto;
@@ -7,6 +9,7 @@ import com.cdac.dto.UserDto;
 import com.cdac.dto.UserUpdateDto;
 import com.cdac.dto.VendorDto;
 import com.cdac.entities.User;
+import com.cdac.entities.UserRole;
 
 public interface UserService {
 	UserDto registerUser(SignUpReqDto dto);
@@ -16,5 +19,6 @@ public interface UserService {
  VendorDto addVendor(VendorDto dto);
  
     ApiResponse forgetPass(SignInDto dto);
+    List<UserRoleDto> getUserByRole(String role);
     
 }

@@ -1,5 +1,7 @@
 package com.cdac.service;
 
+import java.util.List;
+
 import com.cdac.dto.PaymentRequestDto;
 import com.cdac.dto.PaymentResDto;
 import com.cdac.entities.Payment;
@@ -7,4 +9,5 @@ import com.cdac.entities.Payment;
 public interface PaymentService {
 	PaymentResDto processPayment(PaymentRequestDto dto);
     Payment getPaymentByOrderId(Long orderId);
+     List<Payment>   getAll();
 }
