@@ -15,7 +15,6 @@ const Orders = () => {
   const [selectedOrder, setSelectedOrder] = useState(null);
 
   useEffect(() => {
-    // Don't redirect while auth is loading
     if (auth.isLoading) {
       return;
     }

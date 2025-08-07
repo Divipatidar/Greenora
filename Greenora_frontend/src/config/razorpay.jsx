@@ -9,7 +9,6 @@ export const RAZORPAY_CONFIG = {
   }
 };
 
-// Load Razorpay script
 export const loadRazorpayScript = () => {
   return new Promise((resolve, reject) => {
     if (window.Razorpay) {
@@ -29,7 +28,6 @@ export const loadRazorpayScript = () => {
   });
 };
 
-// Initialize Razorpay payment
 export const initializePayment = async (paymentData) => {
   try {
     const Razorpay = await loadRazorpayScript();

@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Eye, EyeOff, Leaf, Mail, Lock, ArrowRight, CheckCircle, Check, X, AlertCircle, CheckCircle2, AlertTriangle, Info } from 'lucide-react';
-// import '../styles/Login.css'; // Removed external CSS import
 import { Link, useNavigate } from 'react-router-dom';
 import authenticationServices from '../Services/AuthenticationServices';
-import { useAuth } from '../context/AuthContext'; // Import useAuth hook
+import { useAuth } from '../context/AuthContext'; 
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -16,8 +15,16 @@ const LoginPage = () => {
     rememberMe: false
   });
 
+  // New state for Forgot Password modal
+  const [isForgotPasswordModalOpen, setIsForgotPasswordModalOpen] = useState(false);
+  const [forgotPasswordEmail, setForgotPasswordEmail] = useState('');
+  const [forgotPasswordPassword, setForgotPasswordPassword] = useState(''); // New state for password
+  const [forgotPasswordEmailError, setForgotPasswordEmailError] = useState('');
+  const [forgotPasswordPasswordError, setForgotPasswordPasswordError] = useState(''); // New state for password error
+  const [isForgotPasswordLoading, setIsForgotPasswordLoading] = useState(false);
+  const [showForgotPasswordPassword, setShowForgotPasswordPassword] = useState(false); // New state for showing password
+
   const navigate = useNavigate();
-  // Corrected: Use 'login' function from useAuth hook
   const { login } = useAuth(); 
 
   // Toast functions
@@ -26,7 +33,6 @@ const LoginPage = () => {
     const newToast = { id, type, title, message };
     setToasts(prev => [...prev, newToast]);
     
-    // Auto remove toast after 4 seconds
     setTimeout(() => {
       removeToast(id);
     }, 4000);
@@ -37,7 +43,6 @@ const LoginPage = () => {
     setToasts(prev => prev.filter(toast => toast.id !== id));
   };
 
-  // Form validation
   const validateForm = () => {
     const errors = {};
     
@@ -64,7 +69,6 @@ const LoginPage = () => {
       [name]: type === 'checkbox' ? checked : value
     }));
     
-    // Clear error when user starts typing
     if (formErrors[name]) {
       setFormErrors(prev => ({
         ...prev,
@@ -89,7 +93,6 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Validate form
     if (!validateForm()) {
       showToast('error', 'Validation Error', 'Please fix the errors below and try again.');
       return;
@@ -105,19 +108,14 @@ const LoginPage = () => {
       });
       
       if (response && response.jwt && response.user) {
-        // Corrected: Call the 'login' function from AuthContext
         login(response.jwt, response.user); 
         
-        // --- START DEBUG LOG ---
         console.log('Login successful! User role received:', response.user.role);
-        // --- END DEBUG LOG ---
 
         showToast('success', 'Login Successful', 'Welcome back! Redirecting to your dashboard...');
         
-        // Reset form
         setFormData({ email: '', password: '', rememberMe: false });
         
-        // Redirect after showing success message
         navigate(getRedirectPath(response.user.role), { replace: true });
       } else {
         showToast('error', 'Authentication Error', 'No authentication token or user received. Please contact support.');
@@ -127,7 +125,6 @@ const LoginPage = () => {
       console.error('Login error:', error);
       
       if (error.response) {
-        // Server responded with error status
         const status = error.response.status;
         const message = error.response.data?.message || 'Server error occurred';
         
@@ -145,10 +142,8 @@ const LoginPage = () => {
             showToast('error', 'Login Failed', message);
         }
       } else if (error.request) {
-        // Network error
         showToast('error', 'Network Error', 'Unable to connect to server. Please check your internet connection.');
       } else {
-        // Other error
         showToast('error', 'Unexpected Error', 'An unexpected error occurred. Please try again.');
       }
     } finally {
@@ -156,7 +151,105 @@ const LoginPage = () => {
     }
   };
 
-  // Toast Component
+  // New functions for Forgot Password logic
+  const handleForgotPasswordLinkClick = (e) => {
+    e.preventDefault();
+    setIsForgotPasswordModalOpen(true);
+  };
+  
+  const handleForgotPasswordEmailChange = (e) => {
+    setForgotPasswordEmail(e.target.value);
+    if (forgotPasswordEmailError) {
+      setForgotPasswordEmailError('');
+    }
+  };
+  
+  const handleForgotPasswordPasswordChange = (e) => {
+    setForgotPasswordPassword(e.target.value);
+    if (forgotPasswordPasswordError) {
+      setForgotPasswordPasswordError('');
+    }
+  };
+
+  const validateForgotPasswordForm = () => {
+    let isValid = true;
+    if (!forgotPasswordEmail) {
+      setForgotPasswordEmailError('Email is required');
+      isValid = false;
+    } else if (!/\S+@\S+\.\S+/.test(forgotPasswordEmail)) {
+      setForgotPasswordEmailError('Please enter a valid email address');
+      isValid = false;
+    }
+    
+    if (!forgotPasswordPassword) {
+      setForgotPasswordPasswordError('Password is required');
+      isValid = false;
+    } else if (forgotPasswordPassword.length < 6) {
+      setForgotPasswordPasswordError('Password must be at least 6 characters');
+      isValid = false;
+    }
+    
+    return isValid;
+  };
+
+  const handleForgotPasswordSubmit = async (e) => {
+    e.preventDefault();
+    if (!validateForgotPasswordForm()) {
+      showToast('error', 'Validation Error', 'Please enter a valid email and new password.');
+      return;
+    }
+  
+    setIsForgotPasswordLoading(true);
+    
+    try {
+      // Call the authentication service method with both email and password
+      const response = await authenticationServices.forgotPassword(forgotPasswordEmail, forgotPasswordPassword);
+      
+      showToast('success', 'Password Updated', 'Your password has been successfully updated.');
+      
+      setForgotPasswordEmail('');
+      setForgotPasswordPassword('');
+      setIsForgotPasswordModalOpen(false);
+      
+    } catch (error) {
+      console.error('Forgot password error:', error);
+      
+      if (error.response) {
+        const status = error.response.status;
+        const message = error.response.data?.message || 'Server error occurred';
+        
+        switch (status) {
+          case 404:
+            showToast('warning', 'Email Not Found', 'Email not found. Please check and try again.');
+            break;
+          case 429:
+            showToast('warning', 'Too Many Attempts', 'Too many password reset attempts. Please wait a moment and try again.');
+            break;
+          case 500:
+            showToast('error', 'Server Error', 'Internal server error. Please try again later.');
+            break;
+          default:
+            showToast('error', 'Reset Failed', message);
+        }
+      } else if (error.request) {
+        showToast('error', 'Network Error', 'Unable to connect to server. Please check your internet connection.');
+      } else {
+        showToast('error', 'Unexpected Error', 'An unexpected error occurred. Please try again.');
+      }
+    } finally {
+      setIsForgotPasswordLoading(false);
+    }
+  };
+  
+  const closeForgotPasswordModal = () => {
+    setIsForgotPasswordModalOpen(false);
+    setForgotPasswordEmail('');
+    setForgotPasswordPassword('');
+    setForgotPasswordEmailError('');
+    setForgotPasswordPasswordError('');
+  };
+
+
   const Toast = ({ toast }) => {
     const getIcon = () => {
       switch (toast.type) {
@@ -192,14 +285,12 @@ const LoginPage = () => {
 
   return (
     <div className="login-container">
-      {/* Toast Container */}
       <div className="toast-container">
         {toasts.map(toast => (
           <Toast key={toast.id} toast={toast} />
         ))}
       </div>
 
-      {/* Animated Background Elements */}
       <div className="bg-element-1"></div>
       <div className="bg-element-2"></div>
       <div className="bg-element-3"></div>
@@ -230,10 +321,8 @@ const LoginPage = () => {
       {/* Main Content */}
       <div className="main-content">
         <div className="content-wrapper">
-          {/* Login Card */}
           <div className="login-card">
             <div className="card-header">
-              {/* Logo Animation */}
               <div className="card-logo-wrapper">
                 <div className="card-logo">
                   <Leaf />
@@ -249,7 +338,6 @@ const LoginPage = () => {
             </div>
 
             <div className="form-container">
-              {/* Email Field */}
               <div className="form-group">
                 <label htmlFor="email" className="form-label">
                   Email Address
@@ -277,7 +365,6 @@ const LoginPage = () => {
                 )}
               </div>
 
-              {/* Password Field */}
               <div className="form-group">
                 <label htmlFor="password" className="form-label">
                   Password
@@ -312,7 +399,6 @@ const LoginPage = () => {
                 )}
               </div>
 
-              {/* Remember Me & Forgot Password */}
               <div className="form-options">
                 <label className="checkbox-container">
                   <div className="custom-checkbox">
@@ -329,9 +415,10 @@ const LoginPage = () => {
                   </div>
                   <span className="checkbox-label">Remember me</span>
                 </label>
-                <a href="#" className="forgot-password">
+                {/* Changed the anchor tag to a button with an onClick handler */}
+                <button type="button" onClick={handleForgotPasswordLinkClick} className="forgot-password-link">
                   Forgot Password?
-                </a>
+                </button>
               </div>
 
               {/* Login Button */}
@@ -393,6 +480,115 @@ const LoginPage = () => {
           </div>
         </div>
       </div>
+
+      {/* Forgot Password Modal */}
+      {isForgotPasswordModalOpen && (
+        <div className="modal-overlay" style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000
+        }}>
+          <div className="login-card" style={{ maxWidth: '400px' }}>
+            <div className="card-header" style={{ marginBottom: '1.5rem' }}>
+              <h2 className="card-title" style={{ fontSize: '1.5rem' }}>Reset Password</h2>
+              <p className="card-subtitle">Enter your email and new password.</p>
+            </div>
+            <form onSubmit={handleForgotPasswordSubmit}>
+              <div className="form-group">
+                <label htmlFor="forgotPasswordEmail" className="form-label">
+                  Email Address
+                </label>
+                <div className="input-group">
+                  <div className="input-icon">
+                    <Mail />
+                  </div>
+                  <input
+                    type="email"
+                    id="forgotPasswordEmail"
+                    name="forgotPasswordEmail"
+                    value={forgotPasswordEmail}
+                    onChange={handleForgotPasswordEmailChange}
+                    className={`form-input ${forgotPasswordEmailError ? 'error' : ''}`}
+                    placeholder="Enter your email address"
+                    required
+                  />
+                </div>
+                {forgotPasswordEmailError && (
+                  <div className="error-message">
+                    <AlertCircle className="error-icon" />
+                    {forgotPasswordEmailError}
+                  </div>
+                )}
+              </div>
+              
+              {/* New Password Input Field */}
+              <div className="form-group">
+                <label htmlFor="forgotPasswordPassword" className="form-label">
+                  New Password
+                </label>
+                <div className="input-group">
+                  <div className="input-icon">
+                    <Lock />
+                  </div>
+                  <input
+                    type={showForgotPasswordPassword ? 'text' : 'password'}
+                    id="forgotPasswordPassword"
+                    name="forgotPasswordPassword"
+                    value={forgotPasswordPassword}
+                    onChange={handleForgotPasswordPasswordChange}
+                    className={`form-input ${forgotPasswordPasswordError ? 'error' : ''}`}
+                    placeholder="Enter your new password"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowForgotPasswordPassword(!showForgotPasswordPassword)}
+                    className="password-toggle"
+                  >
+                    {showForgotPasswordPassword ? <EyeOff /> : <Eye />}
+                  </button>
+                </div>
+                {forgotPasswordPasswordError && (
+                  <div className="error-message">
+                    <AlertCircle className="error-icon" />
+                    {forgotPasswordPasswordError}
+                  </div>
+                )}
+              </div>
+
+              <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1.5rem' }}>
+                <button
+                  type="button"
+                  className="social-button"
+                  onClick={closeForgotPasswordModal}
+                  disabled={isForgotPasswordLoading}
+                  style={{ width: 'auto', flex: 1 }}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className={`login-button ${isForgotPasswordLoading ? 'loading' : ''}`}
+                  disabled={isForgotPasswordLoading}
+                  style={{ width: 'auto', flex: 1, padding: '0.75rem' }}
+                >
+                  <div className="button-content">
+                    {isForgotPasswordLoading && <div className="loading-spinner"></div>}
+                    {isForgotPasswordLoading ? 'Sending...' : 'Send '}
+                  </div>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       <style jsx>{`
         /* General Reset & Base Styles */
@@ -852,15 +1048,21 @@ const LoginPage = () => {
         .checkbox-input:checked ~ .custom-checkbox .checkbox-checkmark {
           opacity: 1;
         }
-
-        .forgot-password {
+        
+        .forgot-password-link {
+          background: none;
+          border: none;
+          padding: 0;
+          margin: 0;
           color: #10b981;
           text-decoration: none;
+          font-family: inherit;
           font-weight: 500;
+          cursor: pointer;
           transition: color 0.2s ease;
         }
 
-        .forgot-password:hover {
+        .forgot-password-link:hover {
           color: #059669;
           text-decoration: underline;
         }
@@ -909,6 +1111,12 @@ const LoginPage = () => {
         @keyframes spin {
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
+        }
+
+        .button-content {
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
 
         .button-icon {

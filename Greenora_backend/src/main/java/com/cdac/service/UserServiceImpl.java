@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import com.cdac.custom_exception.InvalidInputException;
 import com.cdac.custom_exception.ResourseNotFoundException;
 import com.cdac.dao.UserDao;
+import com.cdac.dto.ApiResponse;
+import com.cdac.dto.SignInDto;
 import com.cdac.dto.SignUpReqDto;
 import com.cdac.dto.UserDto;
 import com.cdac.dto.UserUpdateDto;
@@ -80,6 +82,18 @@ public class UserServiceImpl implements UserService {
  		 
 		return modalmapper.map(userdao.save(user),VendorDto.class);
 	}
+
+	@Override
+	public ApiResponse forgetPass(SignInDto dto) {
+		User user = userdao.findByEmail(dto.getEmail()).orElseThrow(()-> 
+		new ResourseNotFoundException("emaill not found!!!"));
+		
+	   user.setPassword(encoder.encode(dto.getPassword()));
+	   return new ApiResponse("password changed!!!");
+
+	}
+	
+	
 
 
 }

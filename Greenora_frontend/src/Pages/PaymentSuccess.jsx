@@ -13,11 +13,10 @@ const PaymentSuccess = () => {
   const { cartItems } = useCart();
   const navigate = useNavigate();
   const [orderId, setOrderId] = useState(null);
-  const [orderDetails, setOrderDetails] = useState(null); // Add state for order details
-  const [loading, setLoading] = useState(false); // Add loading state
+  const [orderDetails, setOrderDetails] = useState(null); 
+  const [loading, setLoading] = useState(false); 
 
   useEffect(() => {
-    // Don't redirect while auth is loading
     if (auth.isLoading) {
       return;
     }
@@ -27,18 +26,15 @@ const PaymentSuccess = () => {
       return;
     }
 
-    // Get order ID from URL params
     const urlParams = new URLSearchParams(window.location.search);
     const orderIdParam = urlParams.get('orderId');
     setOrderId(orderIdParam);
 
-    // Fetch order details if orderId exists
     if (orderIdParam) {
       fetchOrderDetails(orderIdParam);
     }
   }, [auth, navigate]);
 
-  // Add function to fetch order details
   const fetchOrderDetails = async (id) => {
     try {
       setLoading(true);
@@ -51,7 +47,6 @@ const PaymentSuccess = () => {
     }
   };
 
-  // Use order details if available, otherwise fall back to cart items
   const total = orderDetails 
     ? orderDetails.totalAmount
     : cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);

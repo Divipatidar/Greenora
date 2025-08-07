@@ -56,7 +56,6 @@ const Checkout = () => {
       return;
     }
 
-    // Redirect directly to payment page
     navigate('/payment');
   };
 

@@ -44,7 +44,6 @@ const CartPage = () => {
     }
   }, [auth.isLoggedIn, navigate, auth.isLoading]);
 
-  // Add a refresh function that can be called
   const refreshCart = () => {
     if (!auth.isLoggedIn) {
       navigate('/login');
@@ -68,20 +67,19 @@ const CartPage = () => {
         items = cartData.items;
       }
       
-      // Correctly map the nested product data from the API response
       items = items.map(item => ({
         id: item.product.id,
-        cartItemId: item.id, // Keep cart item ID for removal
+        cartItemId: item.id, 
         name: item.product.name,
         price: item.price,
         quantity: item.quantity,
         image: item.product.image,
         category: item.product.category.name,
-        rating: item.product.ecoRating, // Mapping ecoRating to rating
+        rating: item.product.ecoRating, 
         reviews: item.product.reviews || 0,
         originalPrice: item.product.originalPrice || 0,
         discount: item.product.discount || 0,
-        organic: item.product.ecoRating >= 4, // Assuming an ecoRating of 4 or more implies 'organic'
+        organic: item.product.ecoRating >= 4, 
         inStock: item.product.stockStatus === 'IN_STOCK'
       }));
       
@@ -231,12 +229,11 @@ const CartPage = () => {
   };
 
   const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  const shipping = subtotal > 500 ? 0 : 50; // Assuming free shipping over 500
+  const shipping = subtotal > 500 ? 0 : 50; 
   const promoDiscount = appliedPromo ? appliedPromo.amount : 0;
   const tax = (subtotal - promoDiscount) * 0.08;
   const total = subtotal + shipping - promoDiscount + tax;
 
-  // Filter items - assume all items are in stock if inStock property is not set
   const inStockItems = cartItems.filter(item => item.inStock !== false);
   const outOfStockItems = cartItems.filter(item => item.inStock === false);
 

@@ -4,7 +4,6 @@ import { useAuth } from "./AuthContext.jsx";
 const PrivateRoute = ({ children }) => {
   const { auth } = useAuth();
 
-  // Show loading spinner while checking authentication
   if (auth.isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-50">

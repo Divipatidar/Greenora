@@ -1,31 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ShoppingCart, User, Leaf } from 'lucide-react'; // Removed ChevronDown
+import { ShoppingCart, User, Leaf } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
-// Removed categoryServices import
 
 const Navbar = () => {
   const { auth, logout } = useAuth();
   const { cartCount } = useCart();
   const navigate = useNavigate();
-  // Removed categories and showCategoryDropdown states
-  // const [categories, setCategories] = useState([]);
-  // const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
-
-  // Removed useEffect for loading categories
-  // useEffect(() => {
-  //   const loadCategories = async () => {
-  //     try {
-  //       const categoriesData = await categoryServices.fetchCategories();
-  //       setCategories(categoriesData);
-  //     } catch (error) {
-  //       console.error('Error loading categories:', error);
-  //     }
-  //   };
-
-  //   loadCategories();
-  // }, []);
+  
 
   return (
     <nav className="navbar-container">
@@ -43,15 +26,12 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* Navigation Links */}
         <div className="nav-links-section">
           <Link to="/" className="nav-link">
             <span>Home</span>
             <div className="nav-link-underline"></div>
           </Link>
           
-          {/* Categories Dropdown (Removed) */}
-          {/* Removed the entire categories dropdown JSX */}
 
           <Link to="/cart" className="nav-link icon-link cart-link">
             <div className="cart-icon-wrapper">

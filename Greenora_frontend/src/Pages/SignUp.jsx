@@ -4,7 +4,6 @@ import authenticationServices from '../Services/AuthenticationServices.jsx';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-// Updated Toast Component
 const Toast = ({ message, type, onClose }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -35,7 +34,6 @@ const Toast = ({ message, type, onClose }) => {
 
 const SignupPage = () => {
   const [showPassword, setShowPassword] = useState(false);
-  // const [showRoleDropdown, setShowRoleDropdown] = useState(false); // Removed
   const [isLoading, setIsLoading] = useState(false);
   const [toast, setToast] = useState(null);
   
@@ -44,27 +42,20 @@ const SignupPage = () => {
     email: '',
     password: '',
     phone: '',
-    role: 'ROLE_USER' // Set role to ROLE_USER by default
+    role: 'ROLE_USER' 
   });
 
   const [errors, setErrors] = useState({});
   const [passwordStrength, setPasswordStrength] = useState(0);
 
-  // Removed roles array as it's no longer needed for selection
-  // const roles = [
-  //   { value: 'ROLE_USER', label: 'Customer', description: 'Shop organic products' },
-  //   { value: 'ROLE_VENDOR', label: 'Vendor', description: 'Sell organic products' },
-  // ];
 
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  // Show toast notification
   const showToast = (message, type = 'error') => {
     setToast({ message, type });
   };
 
-  // Close toast notification
   const closeToast = () => {
     setToast(null);
   };
@@ -99,13 +90,7 @@ const SignupPage = () => {
     return '';
   };
 
-  // Removed validateRole as role is now fixed
-  // const validateRole = (role) => {
-  //   if (!role) return 'Please select an account type';
-  //   return '';
-  // };
-
-  // Real-time validation
+  
   const validateField = (name, value) => {
     let error = '';
     switch (name) {
@@ -121,9 +106,7 @@ const SignupPage = () => {
       case 'phone':
         error = validatePhone(value);
         break;
-      // case 'role': // Removed role validation
-      //   error = validateRole(value);
-      //   break;
+      
       default:
         break;
     }
@@ -143,11 +126,9 @@ const SignupPage = () => {
     newErrors.email = validateEmail(formData.email);
     newErrors.password = validatePassword(formData.password);
     newErrors.phone = validatePhone(formData.phone);
-    // newErrors.role = validateRole(formData.role); // Removed role validation
 
     setErrors(newErrors);
     
-    // Return true if no errors
     return Object.values(newErrors).every(error => error === '');
   };
 
@@ -158,24 +139,14 @@ const SignupPage = () => {
       [name]: type === 'checkbox' ? checked : value
     }));
 
-    // Real-time validation
     validateField(name, value);
 
-    // Check password strength
     if (name === 'password') {
       checkPasswordStrength(value);
     }
   };
 
-  // Removed handleRoleSelect as role is now fixed
-  // const handleRoleSelect = (roleValue) => {
-  //   setFormData(prev => ({
-  //     ...prev,
-  //     role: roleValue
-  //   }));
-  //   validateField('role', roleValue);
-  //   setShowRoleDropdown(false);
-  // };
+  
 
   const checkPasswordStrength = (password) => {
     let strength = 0;
@@ -227,23 +198,17 @@ const SignupPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Enhanced validation with toast
     if (!validateAllFields()) {
       const firstError = Object.values(errors).find(error => error !== '');
       showToast(firstError || 'Please fix the errors in the form', 'error');
       return;
     }
 
-    // Your original validation logic
     if (!formData.name || !formData.email || !formData.password) {
       showToast('Please fill in all required fields!', 'error');
       return;
     }
-    // No need to check formData.role as it's fixed to ROLE_USER
-    // if (!formData.role) {
-    //   showToast('Please select a role!', 'error');
-    //   return;
-    // }
+    
 
     setIsLoading(true);
 
@@ -254,11 +219,7 @@ const SignupPage = () => {
         throw new Error('No user role received from server after signup. Please contact support.');
       }
       
-      // Assuming 'response.jwt' might be undefined or null if not returned by signup API.
-      // localStorage.setItem('token', response.jwt); // Only set if JWT is actually returned
       
-      // Pass the relevant user data to the login context.
-      // If 'response.jwt' is truly not returned, you might pass null or an empty string.
       login(response.jwt || null, { name: response.name, email: response.email, phone: response.phone, role: response.role }); 
       
       showToast(`Registration successful! Redirecting...`, 'success');
@@ -267,11 +228,10 @@ const SignupPage = () => {
         email: '',
         password: '',
         phone: '',
-        role: 'ROLE_USER' // Reset role to ROLE_USER
+        role: 'ROLE_USER' 
       });
       setErrors({});
       setTimeout(() => {
-        // Access role directly from the response object for redirection
         navigate(getRedirectPath(response.role)); 
       }, 1200);
       
@@ -283,7 +243,6 @@ const SignupPage = () => {
     }
   };
 
-  // const selectedRole = roles.find(role => role.value === formData.role); // Not needed anymore
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
@@ -459,8 +418,7 @@ const SignupPage = () => {
                 )}
               </div>
 
-              {/* Role selection removed */}
-              {/* No longer need the role dropdown UI elements */}
+              
 
               {/* Signup Button */}
               <button 

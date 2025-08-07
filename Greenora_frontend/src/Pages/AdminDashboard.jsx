@@ -9,30 +9,25 @@ import { Link } from 'react-router-dom';
 const AdminDashboard = () => {
   const { auth } = useAuth();
 
-  // State for managing categories
   const [categories, setCategories] = useState([]);
   const [newCategory, setNewCategory] = useState({ name: '', description: '' });
   const [editingCategory, setEditingCategory] = useState(null);
   const [categoryLoading, setCategoryLoading] = useState(false);
 
-  // State for managing products
   const [products, setProducts] = useState([]);
   const [editingProduct, setEditingProduct] = useState(null);
   const [newProduct, setNewProduct] = useState({ name: '', description: '', price: '', image: '', categoryId: '', vendorId: '', ecoRating: '', quantity: '' });
   const [productLoading, setProductLoading] = useState(false);
 
-  // State for managing coupons
   const [coupons, setCoupons] = useState([]);
   const [editingCoupon, setEditingCoupon] = useState(null);
   const [newCoupon, setNewCoupon] = useState({ couponCode: '', discountValue: '', minOrderAmt: '', isActive: true, validFrom: '', validUntil: '' });
   const [couponLoading, setCouponLoading] = useState(false);
 
-  // State for managing vendors
   const [vendors, setVendors] = useState([]);
   const [newVendor, setNewVendor] = useState({ name: '', email: '', password: '', phoneNumber: '' });
   const [vendorLoading, setVendorLoading] = useState(false);
 
-  // Load data on component mount
   useEffect(() => {
     loadCategories();
     loadProducts();
@@ -78,7 +73,6 @@ const AdminDashboard = () => {
   
   
 
-  // --- Category Management Functions ---
   const handleAddCategory = async () => {
     if (!newCategory.name.trim()) {
       alert('Category name cannot be empty.');
@@ -137,7 +131,6 @@ const AdminDashboard = () => {
     }
   };
 
-  // --- Product Management Functions ---
   const handleAddProduct = async () => {
     if (!newProduct.name || !newProduct.price || !newProduct.categoryId) {
       alert('Please fill all required product fields.');
@@ -146,7 +139,7 @@ const AdminDashboard = () => {
     
     try {
       setProductLoading(true);
-      const addedProduct = await productServices.addProduct(newProduct);
+      const addedProduct = await productServices.addProduct(newProduct, newProduct.categoryId);
       setProducts([...products, addedProduct]);
       setNewProduct({ name: '', description: '', price: '', image: '', categoryId: '', vendorId: '', ecoRating: '', quantity: '' });
     } catch (error) {
@@ -202,7 +195,6 @@ const AdminDashboard = () => {
     }
   };
 
-  // --- Coupon Management Functions ---
   const handleAddCoupon = async () => {
     if (!newCoupon.couponCode || !newCoupon.discountValue || !newCoupon.validUntil) {
       alert('Please fill all required coupon fields.');
@@ -260,7 +252,6 @@ const AdminDashboard = () => {
     }
   };
 
-  // --- Vendor Management Functions ---
   const handleAddVendor = async () => {
     if (!newVendor.name || !newVendor.email || !newVendor.password || !newVendor.phoneNumber) {
       alert('Please fill all vendor fields.');
@@ -269,7 +260,6 @@ const AdminDashboard = () => {
     try {
       setVendorLoading(true);
       await authenticationService.addVendor(newVendor);
-      loadVendors(); 
       setNewVendor({ name: '', email: '', password: '', phoneNumber: '' });
     } catch (error) {
       console.error('Error adding vendor:', error);
@@ -281,7 +271,6 @@ const AdminDashboard = () => {
 
   
 
-  // Access control check
   if (!auth.isLoading && (!auth.isLoggedIn || auth.user?.role !== 'ROLE_ADMIN')) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-red-50 text-red-700 text-lg font-semibold">

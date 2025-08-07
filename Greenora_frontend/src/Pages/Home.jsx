@@ -596,7 +596,6 @@ const GrenoraHomepage = () => {
       fontSize: '1rem',
     },
 
-    // Loading and Error Styles
     loadingText: {
       textAlign: 'center',
       color: '#059669',
@@ -618,11 +617,9 @@ const GrenoraHomepage = () => {
       try {
         setLoading(true);
         
-        // Load categories
         const categoriesData = await categoryServices.fetchCategories();
         setCategories(categoriesData);
         
-        // Load products
         if (!auth.isLoading && auth.isLoggedIn && auth.token) {
           const productsData = await productServices.fetchProducts();
           setProducts(productsData);
@@ -674,16 +671,13 @@ const GrenoraHomepage = () => {
 
   const addToCart = async (product) => {
     if (!auth.isLoggedIn) {
-      // Redirect to login page if user is not logged in 
       window.location.href = '/login';
       return;
     }
     
     try {
-      // Add to cart using the cart service with user ID
       await cartServices.addToCart(auth.user.id, product.id, 1);
       
-      // Show success message or notification
       alert('Product added to cart successfully!');
     } catch (error) {
       console.error('Error adding to cart:', error);
@@ -693,7 +687,6 @@ const GrenoraHomepage = () => {
 
   const toggleWishlist = (productId) => {
     if (!auth.isLoggedIn) {
-      // Redirect to login page if user is not logged in
       window.location.href = '/login';
       return;
     }

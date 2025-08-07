@@ -22,7 +22,7 @@ public class Product extends BaseEntity {
 	@Column(length=30)
      private String name;
 	
-	@Column(length=30)
+	@Column(length=250)
     private String description;
 	
 	private int quantity;

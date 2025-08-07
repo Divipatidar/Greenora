@@ -98,4 +98,9 @@ public class UserContoller {
 	   return ResponseEntity.status(HttpStatus.CREATED).body(vendor);
    }
    
+   
+   @PostMapping("/password")
+   public ResponseEntity<?>  forgetPassword(@RequestBody SignInDto dto){
+	   return ResponseEntity.ok(userservice.forgetPass(dto));
+   }
 }

@@ -76,7 +76,7 @@ public class SecurityConfiguration {
 		http.authorizeHttpRequests(request -> 
 		//5.permit all - swagger ,  user signin , sign up....
 		request.requestMatchers("/swagger-ui/**","/v**/api-docs/**",
-				"/users/login","/users/signup").permitAll()
+				"/users/login","/users/signup","/users/password").permitAll()
 		// User endpoints
         .requestMatchers(HttpMethod.POST, "/users/signup").permitAll()
         .requestMatchers(HttpMethod.POST, "/users/login").permitAll()

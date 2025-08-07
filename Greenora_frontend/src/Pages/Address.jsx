@@ -15,7 +15,6 @@ import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import addressService from '../Services/AddressService';
 
-// Toast Component
 const Toast = ({ message, type, onClose }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -62,7 +61,6 @@ const AddressPage = () => {
   });
 
   useEffect(() => {
-    // Don't redirect while auth is loading
     if (auth.isLoading) {
       return;
     }
@@ -81,7 +79,6 @@ const AddressPage = () => {
       setAddress(addressData);
     } catch (error) {
       console.error('Error loading address:', error);
-      // Don't show error toast if no address exists (404 is expected)
       if (error.response?.status !== 404) {
         showToast('Failed to load address', 'error');
       }
@@ -115,7 +112,6 @@ const AddressPage = () => {
       return false;
     }
 
-    // Validate pincode format
     const pincodeRegex = /^[0-9]{6}$/;
     if (!pincodeRegex.test(formData.pincode)) {
       showToast('Please enter a valid 6-digit pincode', 'error');
@@ -142,14 +138,12 @@ const AddressPage = () => {
 
        const updatedUser = { ...auth.user, addresId: address1.id };
       
-      // Call the new updateUser function to instantly update the context
       updateUser(updatedUser); 
 
       setAddress([...address, address1]);
         showToast('Address added successfully!', 'success');
         
         
-        // Redirect to payment flow after adding address
         setTimeout(() => {
           navigate('/checkout');
         }, 1500);

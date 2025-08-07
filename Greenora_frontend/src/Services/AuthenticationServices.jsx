@@ -1,5 +1,4 @@
 import axios from 'axios';
-// Add Axios interceptor to attach JWT token to all requests
 
 
 const jwt =localStorage.getItem('token');
@@ -68,14 +67,23 @@ export const addVendor= async(vendor)=>{
     
   } 
 }
-
+export const forgotPassword = async (email,password) => {
+  try {
+    const response = await axios.post(`${API_URL}/password`,{email, password} );
+    return response.data; 
+  } catch (error) {
+    console.error('Error in forgot password:', error);
+    throw error;
+  }
+}
 const authenticationServices = {
   signup,
   login,
   logout,
   updateUser,
   getuserbyid,
-  addVendor
+  addVendor,
+  forgotPassword
 };
 
 export default authenticationServices;

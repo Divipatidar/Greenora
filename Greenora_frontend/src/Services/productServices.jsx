@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-// Add Axios interceptor to attach JWT token to all requests
 axios.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
@@ -12,72 +11,72 @@ axios.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-const API_URL = 'http://localhost:8080/products';// Replace with your actual API URL
+const API_URL = 'http://localhost:8080/products';
 
 export const fetchProducts = async () => {
   try {
     const response = await axios.get(API_URL);
-    return response.data; // Assuming the API returns an array of products
+    return response.data; 
   } catch (error) {
     console.error('Error fetching products:', error);
-    throw error; // Re-throw the error for further handling if needed
+    throw error; 
   }
 }
 
 export const addProduct = async (product,categoryId) => {
   try {
     const response = await axios.post(`${API_URL}/${categoryId}`, product);
-    return response.data; // Assuming the API returns the added product
+    return response.data; 
   } catch (error) {
     console.error('Error adding product:', error);
-    throw error; // Re-throw the error for further handling if needed
+    throw error; 
   }
 }
 export const updateProduct = async (productId, product) => {
   try {
     const response = await axios.put(`${API_URL}/${productId}`, product);
-    return response.data; // Assuming the API returns the updated product
+    return response.data; 
   } catch (error) {
     console.error('Error updating product:', error);
-    throw error; // Re-throw the error for further handling if needed
+    throw error; 
   }
 }
 
 export const getProductById = async (productId) => {
   try {
     const response = await axios.get(`${API_URL}/${productId}`);
-    return response.data; // Assuming the API returns the product details
+    return response.data; 
   } catch (error) {
     console.error('Error fetching product by ID:', error);
-    throw error; // Re-throw the error for further handling if needed
+    throw error; 
   }
 }
 
 export const getbycategory = async (categoryId) => {
   try {
     const response = await axios.get(`${API_URL}/category/${categoryId}`);
-    return response.data; // Assuming the API returns products by category
+    return response.data; 
   } catch (error) {
     console.error('Error fetching products by category:', error);
-    throw error; // Re-throw the error for further handling if needed
+    throw error; 
   }
 }
 export const getbyproductname = async (productName) => {
   try {
     const response = await axios.get(`${API_URL}/name/${productName}`);
-    return response.data; // Assuming the API returns products by name
+    return response.data; 
   } catch (error) {
     console.error('Error fetching products by name:', error);
-    throw error; // Re-throw the error for further handling if needed
+    throw error; 
   }
 }
 export const deleteProduct = async (productId) => {
   try {
     const response = await axios.delete(`${API_URL}/${productId}`);
-    return response.data; // Assuming the API returns a success message or the deleted product
+    return response.data; 
   } catch (error) {
     console.error('Error deleting product:', error);
-    throw error; // Re-throw the error for further handling if needed
+    throw error; 
   }
 }
 
@@ -124,10 +123,10 @@ export const isInWishlist = async (productId) => {
 export const vendorProducts=async(id)=>{
   try {
     const response = await axios.get(`${API_URL}/vendor/${id}`);
-    return response.data; // Assuming the API returns the product details
+    return response.data; 
   } catch (error) {
     console.error('Error fetching product by ID:', error);
-    throw error; // Re-throw the error for further handling if needed
+    throw error; 
   }
 }
 

@@ -11,7 +11,7 @@ import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import { useNavigate } from 'react-router-dom';
 import OrderServices from '../Services/OrderServices';
-
+import { sendEmail } from '../Services/EmailSErvices';
 const Payment = () => {
   const { auth } = useAuth();
   const { cartItems, clearCart } = useCart();
@@ -19,7 +19,6 @@ const Payment = () => {
   const [loading, setLoading] = useState(false);
   const [razorpayLoaded, setRazorpayLoaded] = useState(false);
 
-  // Load Razorpay script on component mount
   useEffect(() => {
     const loadRazorpayScript = () => {
       return new Promise((resolve) => {
@@ -47,7 +46,6 @@ const Payment = () => {
   }, []);
 
   useEffect(() => {
-    // Don't redirect while auth is loading
     if (auth.isLoading) {
       return;
     }
@@ -57,7 +55,6 @@ const Payment = () => {
       return;
     }
 
-    // Check if user has address
     if (!auth.user.addresId) {
       alert('Please add a delivery address first.');
       navigate('/address');
@@ -74,7 +71,6 @@ const Payment = () => {
     try {
       setLoading(true);
       
-      // Create order using paymentServices.makePayment
       
 
       const order = await OrderServices.placeOrder({
@@ -83,10 +79,9 @@ const Payment = () => {
         couponId: null
       });
       
-      // Initialize Razorpay payment
       const options = {
-        key: "rzp_test_3XPbZ2s4nAbtpD", // Replace with your actual key
-        amount: order.amount * 100, // Razorpay expects amount in paise
+        key: "rzp_test_3XPbZ2s4nAbtpD",
+        amount: order.amount * 100, 
         currency: order.currency,
         name: "Greenora",
         description: "Organic Products Purchase",
@@ -94,8 +89,13 @@ const Payment = () => {
         handler: async function (response) {
           try {
             console.log('Payment successful:', response);
-            // Clear cart and redirect to success page
             await clearCart();
+            await sendEmail
+             ({
+              to: auth.user.email,
+              subject: 'Payment Confirmation',
+              body: `Your payment of ₹${order.amount} was successful. Thank you for shopping with us!`
+            });
             navigate('/payment/success?orderId=' + order.id);
           } catch (error) {
             console.error('Payment completion error:', error);

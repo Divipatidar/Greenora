@@ -7,17 +7,14 @@ import { Link } from 'react-router-dom';
 const VendorDashboard = () => {
   const { auth } = useAuth();
 
-  // State for managing categories (Vendors can select from existing categories)
   const [categories, setCategories] = useState([]);
   const [categoryLoading, setCategoryLoading] = useState(false);
 
-  // State for managing products (Vendor's own products)
   const [products, setProducts] = useState([]);
   const [editingProduct, setEditingProduct] = useState(null);
   const [newProduct, setNewProduct] = useState({ name: '', description: '', price: '', image: '', categoryId: '', ecoRating: '', quantity: '' });
   const [productLoading, setProductLoading] = useState(false);
 
-  // Load data on component mount
   useEffect(() => {
     loadCategories();
     loadVendorProducts();
@@ -38,9 +35,7 @@ const VendorDashboard = () => {
   const loadVendorProducts = async () => {
     try {
       setProductLoading(true);
-      // In a real app, you'd filter products by vendor ID
       const data = await productServices.vendorProducts(auth.user.id);
-      // For now, we'll assume all products belong to the current vendor
       setProducts(data);
     } catch (error) {
       console.error('Error loading vendor products:', error);

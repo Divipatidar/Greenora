@@ -18,7 +18,6 @@ export const CartProvider = ({ children }) => {
   const [cartCount, setCartCount] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  // Load cart data when user logs in
   useEffect(() => {
     if (auth.isLoggedIn && auth.user?.id) {
       loadCart();
@@ -40,10 +39,9 @@ export const CartProvider = ({ children }) => {
         items = cartData.items;
       }
       
-      // Correctly map the nested product data
       items = items.map(item => ({
         id: item.product.id,
-        cartItemId: item.id, // Store the cart item id for removal
+        cartItemId: item.id, 
         name: item.product.name,
         price: item.price,
         quantity: item.quantity,
@@ -75,7 +73,7 @@ export const CartProvider = ({ children }) => {
 
     try {
       await cartServices.addToCart(auth.user.id, productId, quantity);
-      await loadCart(); // Reload cart to get updated data
+      await loadCart(); 
     } catch (error) {
       console.error('Error adding to cart:', error);
       throw error;
