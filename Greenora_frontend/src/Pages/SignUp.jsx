@@ -214,7 +214,7 @@ const SignupPage = () => {
   const getRedirectPath = (role) => {
     switch (role) {
       case 'ROLE_USER':
-        return '/login';
+        return '/';
       case 'ROLE_VENDOR':
         return '/vendor';
       case 'ROLE_ADMIN':

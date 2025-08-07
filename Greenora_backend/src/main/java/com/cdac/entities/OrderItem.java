@@ -25,12 +25,12 @@ public class OrderItem  extends BaseEntity{
      
      @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER, orphanRemoval = true)
      @JsonManagedReference
-     @JoinColumn(name = "product_id")
+     @JoinColumn(name = "product_id",unique = false)
      private Product product;
      
      
      @ManyToOne(fetch =FetchType.LAZY)
-      @JoinColumn(name = "order_id")
+      @JoinColumn(name = "order_id",unique = false)
      @JsonBackReference
      private Order order;
 

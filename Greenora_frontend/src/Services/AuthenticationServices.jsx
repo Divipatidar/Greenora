@@ -1,16 +1,6 @@
 import axios from 'axios';
-
 // Add Axios interceptor to attach JWT token to all requests
-axios.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
+
 
 const jwt =localStorage.getItem('token');
 
@@ -41,7 +31,11 @@ export const logout = () => {
 }
 export const updateUser = async (userId, userData) => {
   try {
-    const response = await axios.put(`${API_URL}/${userId}`, userData);
+    const response = await axios.put(`${API_URL}/${userId}`, userData,{
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+    });
     return response.data; 
   } catch (error) {
     console.error('Error updating user:', error);
@@ -63,7 +57,11 @@ export const getuserbyid = async (userId) =>  {
 }
 export const addVendor= async(vendor)=>{
   try {      
-    const response = await axios.post(API_URL+'/vendor', vendor);
+    const response = await axios.post(API_URL+'/vendor', vendor,{
+      headers: {
+        Authorization : `Bearer ${jwt}`,
+      },
+    });
     return response.data; 
   } catch (error) {
     console.error('Error in vedor adding ', error);
