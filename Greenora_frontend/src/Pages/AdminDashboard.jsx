@@ -143,7 +143,6 @@ const AdminDashboard = () => {
     }
   };
   
-  // Custom alert/confirm functions to avoid browser pop-ups
   const showAlert = (message) => {
     console.warn("Custom Alert:", message);
     alert(message);
@@ -154,7 +153,6 @@ const AdminDashboard = () => {
     return window.confirm(message);
   };
 
-  // Existing handlers...
   const handleAddCategory = async () => {
     if (!newCategory.name.trim()) {
       showAlert('Category name cannot be empty.');
@@ -353,13 +351,11 @@ const AdminDashboard = () => {
     }
   };
 
-  // Modified function to update only the delivery status with the provided statuses
   const handleUpdateDeliveryStatus = async (orderId, newStatus) => {
     try {
       setOrderLoading(true);
-      // Calls the backend to update the deliveryStatus
       await orderServices.updateOrderStatus(orderId, newStatus );
-      loadOrders(); // Reload orders to reflect the changes
+      loadOrders(); 
     } catch (error) {
       console.error('Error updating order status:', error);
       showAlert('Failed to update order status. Please try again.');
@@ -368,7 +364,6 @@ const AdminDashboard = () => {
     }
   };
 
-  // Access control for admin role
   if (!auth.isLoading && (!auth.isLoggedIn || auth.user?.role !== 'ROLE_ADMIN')) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-red-100 text-red-800 text-xl font-semibold p-4 rounded-lg shadow-lg">
@@ -392,15 +387,12 @@ const AdminDashboard = () => {
   }
 
   const renderSection = () => {
-    // Common input/select classes for forms
     const formInputClass = "p-3 border border-green-300 rounded-lg focus:ring-4 focus:ring-green-400 focus:border-green-500 transition duration-300 shadow-md placeholder-gray-400 text-gray-800";
     const formTextAreaClass = "p-3 border border-green-300 rounded-lg focus:ring-4 focus:ring-green-400 focus:border-green-500 transition duration-300 shadow-md placeholder-gray-400 text-gray-800";
     const formSelectClass = "p-3 border border-green-300 rounded-lg focus:ring-4 focus:ring-green-400 focus:border-green-500 transition duration-300 shadow-md bg-white text-gray-800";
 
-    // Common button classes for add/save
     const primaryButtonClass = "mt-6 w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white py-3 px-8 rounded-xl hover:from-green-600 hover:to-emerald-700 transition duration-300 flex items-center justify-center text-lg font-bold shadow-lg hover:shadow-xl transform hover:scale-105 disabled:opacity-60 disabled:cursor-not-allowed";
     
-    // Common button classes for edit/delete actions in lists
     const actionButtonClass = "p-2 rounded-full hover:bg-green-100 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-opacity-75";
 
     switch (activeSection) {

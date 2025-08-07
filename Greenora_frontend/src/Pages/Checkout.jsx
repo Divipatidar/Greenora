@@ -15,7 +15,6 @@ import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import { useNavigate } from 'react-router-dom';
 import addressService from '../Services/AddressService';
-import OrderServices from '../Services/OrderServices';
 
 const Checkout = () => {
   const { auth } = useAuth();
